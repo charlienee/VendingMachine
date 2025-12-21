@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+  </PropertyGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Image\AppIconVM.jpg" />
+    <AvaloniaResource Include="Image\FullIconAppVM.png" />
+    <AvaloniaResource Include="Image\RuFlag.png" />
+    <AvaloniaResource Include="Image\UserMenuIconGen.png" />
+    <AvaloniaResource Include="Image\UserMenuIconSes.png" />
+    <AvaloniaResource Include="Image\UserMenuIconExit.png" />
+    <AvaloniaResource Include="Image\SidebarIconHome.png" />
+    <AvaloniaResource Include="Image\SidebarIconMonVM.png" />
+    <AvaloniaResource Include="Image\SidebarIconRep.png" />
+    <AvaloniaResource Include="Image\SidebarIconTMC.png" />
+    <AvaloniaResource Include="Image\SidebarIconAdm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.2.1" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.2.1" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.1" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.1" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.2.1">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="FirebirdSql.Data.FirebirdClient" Version="10.3.4" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0-rc6.1" />
+  </ItemGroup>
+</Project>

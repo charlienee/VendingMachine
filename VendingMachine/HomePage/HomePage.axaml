@@ -1,0 +1,68 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="VendingMachine.HomePage">
+
+  <Grid ColumnDefinitions="*, *, *" RowDefinitions="Auto, *, 1.5*" Margin="10 10">
+    <TextBlock Grid.ColumnSpan="3" Text="Личный кабинет. Главная" Margin="10 5"/>
+    <Grid Grid.Row="1" Grid.Column="0" Background="#FFF" Margin="10 5" RowDefinitions="Auto, *, Auto">
+      <TextBlock Background="#EEE" Text=" Эффективность сети" Padding="5" VerticalAlignment="Center"/>
+      <lvc:PieChart
+            Grid.Row="1"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            InitialRotation="-160"
+            MaxAngle="140"
+            MinValue="0"
+            MaxValue="100"
+            Margin="0 10 0 0">
+            <lvc:PieChart.Series>
+              <lvc:XamlAngularGaugeSeries CornerRadius="1" Fill="#4CAF50" x:Name="workingVM_Gauge" MaxRadialColumnWidth="40"/>
+              <lvc:XamlAngularGaugeSeries CornerRadius="1" Fill="#FFC107" x:Name="serviceVM_Gauge" MaxRadialColumnWidth="40"/>
+              <lvc:XamlAngularGaugeSeries CornerRadius="1" Fill="#F44336" x:Name="nWorkingVM_Gauge" MaxRadialColumnWidth="40"/>
+            </lvc:PieChart.Series>
+            <lvc:PieChart.VisualElements>
+              <lvc:XamlNeedle Width="10" x:Name="eff_needle"/>
+            </lvc:PieChart.VisualElements>
+      </lvc:PieChart>
+      <TextBlock Grid.Row="2" x:Name="eff_tb" FontSize="10" HorizontalAlignment="Center"/>
+    </Grid>
+    <Grid Grid.Row="1" Grid.Column="1" Background="#FFF" Margin="10 5" RowDefinitions="Auto, *">
+      <TextBlock Background="#EEE" Text=" Состояние сети" Padding="5" VerticalAlignment="Center"/>
+    </Grid>
+    <Grid Grid.Row="1" Grid.Column="2" Background="#FFF" Margin="10 5" RowDefinitions="Auto, *">
+      <TextBlock Background="#EEE" Text=" Сводка" Padding="5" VerticalAlignment="Center"/>
+    </Grid>
+    <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="#FFF" Margin="10 5" RowDefinitions="Auto, *">
+      <TextBlock Background="#EEE" Text=" Динамика продаж за последние 10 дней" Padding="5" VerticalAlignment="Center"/>
+      <TabControl Grid.Row="1">
+        <TabItem Header="По сумме" FontSize="14">
+          <lvc:CartesianChart>
+            <lvc:CartesianChart.Series>
+              <lvc:XamlColumnSeries x:Name="SalesTotalSum_XCL" Padding="10" MaxBarWidth="60" Fill="#6797be7b" Stroke="#92b8d7ff"/>
+            </lvc:CartesianChart.Series>
+            <lvc:CartesianChart.XAxes>
+              <lvc:XamlDateTimeAxis x:Name="SalesTotalSum_XDTA" ForceStepToMin="True" Interval="1.00:00:00" TextSize="10"/>
+            </lvc:CartesianChart.XAxes>
+          </lvc:CartesianChart>
+        </TabItem>
+        <TabItem Header="По количеству" FontSize="14">
+          <lvc:CartesianChart>
+            <lvc:CartesianChart.Series>
+              <lvc:XamlColumnSeries x:Name="SalesCount_XCL" Padding="10" MaxBarWidth="60" Fill="#6797be7b" Stroke="#92b8d7ff"/>
+            </lvc:CartesianChart.Series>
+            <lvc:CartesianChart.XAxes>
+              <lvc:XamlDateTimeAxis x:Name="SalesCount_XDTA" ForceStepToMin="True" Interval="1.00:00:00" TextSize="10"/>
+            </lvc:CartesianChart.XAxes>
+          </lvc:CartesianChart>
+        </TabItem>
+      </TabControl>
+    </Grid>
+    <Grid Grid.Row="2" Grid.Column="2" Background="#FFF" Margin="10 5" RowDefinitions="Auto, *">
+      <TextBlock Background="#EEE" Text=" Новости" Padding="5" VerticalAlignment="Center"/>
+    </Grid>
+  </Grid>
+</UserControl>

@@ -1,0 +1,122 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="VendingMachine.MainContentPage">
+  
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="0.09*"/>
+        <RowDefinition Height="0.08*"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <DockPanel LastChildFill="False">
+        <Image Source="avares://VendingMachine/Image/FullIconAppVM.png" DockPanel.Dock="Left"/>
+        <Menu DockPanel.Dock="Right" CornerRadius="0">
+          <MenuItem>
+            <MenuItem.Header>
+              <DockPanel LastChildFill="False">
+                <Image Source="avares://VendingMachine/Image/RuFlag.png" DockPanel.Dock="Left" Margin="0 0 10 0" x:Name="userPicture_img"/>
+                <StackPanel>
+                  <TextBlock x:Name="userName_tb" Text="Инициалы роль" FontSize="13"/>
+                  <TextBlock x:Name="userRole_tb" FontSize="13"/>
+                </StackPanel>
+              </DockPanel>
+            </MenuItem.Header>
+            <MenuItem>
+              <MenuItem.Header>
+                <StackPanel Orientation="Horizontal">
+                  <Image Source="avares://VendingMachine/Image/UserMenuIconGen.png" Width="25" Height="25"/>
+                  <TextBlock Text=" Мой профиль" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </StackPanel>
+              </MenuItem.Header>
+            </MenuItem>
+            <MenuItem>
+              <MenuItem.Header>
+                <StackPanel Orientation="Horizontal">
+                  <Image Source="avares://VendingMachine/Image/UserMenuIconSes.png" Width="25" Height="25"/>
+                  <TextBlock Text=" Мои сессии" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </StackPanel>
+              </MenuItem.Header>
+            </MenuItem>
+            <MenuItem>
+              <MenuItem.Header>
+                <StackPanel Orientation="Horizontal">
+                  <Image Source="avares://VendingMachine/Image/UserMenuIconExit.png" Width="25" Height="25"/>
+                  <TextBlock Text=" Выход" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </StackPanel>
+              </MenuItem.Header>
+            </MenuItem>
+          </MenuItem>
+        </Menu>
+      </DockPanel>
+      <Grid Grid.Row="1" Background="#223" >
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel LastChildFill="False">
+          <TextBlock DockPanel.Dock="Left" Foreground="#DDD" VerticalAlignment="Center" Text=" Навигация"/>
+          <Button Content="&#x2630;" DockPanel.Dock="Right" Foreground="#DDD" Click="menuButton_click" />
+        </DockPanel>
+        <TextBlock Grid.Column="1" Text=" ООО Торговые Автоматы" Foreground="#DDD" VerticalAlignment="Center"/>
+      </Grid>
+      <Grid Grid.Row="2" x:Name="general_grid">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <TreeView x:Name="sidebar_tv" Background="#223">
+          <TreeViewItem Foreground="#DDD" FontSize="14">
+            <TreeViewItem.Header>
+              <StackPanel Orientation="Horizontal">
+                <Image Source="avares://VendingMachine/Image/SidebarIconHome.png" Width="25" Height="25"/>
+                <TextBlock Text=" Главная" VerticalAlignment="Center"/>
+              </StackPanel>
+            </TreeViewItem.Header>
+          </TreeViewItem>
+          <TreeViewItem Foreground="#DDD" FontSize="14">
+            <TreeViewItem.Header>
+              <StackPanel Orientation="Horizontal">
+                <Image Source="avares://VendingMachine/Image/SidebarIconMonVM.png" Width="25" Height="25"/>
+                <TextBlock Text=" Монитор ТА" VerticalAlignment="Center"/>
+              </StackPanel>
+            </TreeViewItem.Header>
+          </TreeViewItem>
+          <TreeViewItem Foreground="#DDD" FontSize="14">
+            <TreeViewItem.Header>
+              <StackPanel Orientation="Horizontal">
+                <Image Source="avares://VendingMachine/Image/SidebarIconRep.png" Width="25" Height="25"/>
+                <TextBlock Text=" Детальные отчеты" VerticalAlignment="Center"/>
+              </StackPanel>
+            </TreeViewItem.Header>
+            <TreeViewItem/>
+          </TreeViewItem>
+          <TreeViewItem Foreground="#DDD" FontSize="14">
+            <TreeViewItem.Header>
+              <StackPanel Orientation="Horizontal">
+                <Image Source="avares://VendingMachine/Image/SidebarIconTMC.png" Width="25" Height="25"/>
+                <TextBlock Text=" Учет ТМЦ" VerticalAlignment="Center"/>
+              </StackPanel>
+            </TreeViewItem.Header>
+            <TreeViewItem/>
+          </TreeViewItem>
+          <TreeViewItem Foreground="#DDD" FontSize="14">
+            <TreeViewItem.Header>
+              <StackPanel Orientation="Horizontal">
+                <Image Source="avares://VendingMachine/Image/SidebarIconAdm.png" Width="25" Height="25"/>
+                <TextBlock Text=" Администрирование" VerticalAlignment="Center"/>
+              </StackPanel>
+            </TreeViewItem.Header>
+            <TreeViewItem Header="Торговые автоматы"/>
+            <TreeViewItem Header="Компании"/>
+            <TreeViewItem Header="Пользователи"/>
+            <TreeViewItem Header="Модемы"/>
+            <TreeViewItem Header="Дополнительные"/>
+          </TreeViewItem>
+        </TreeView>
+        <ContentControl Grid.Column="1" x:Name="PageContent" Background="#DDD"/>
+      </Grid>
+    </Grid>
+</UserControl>
