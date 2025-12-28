@@ -29,11 +29,11 @@ public partial class HomePage : UserControl
 
         _timer = new DispatcherTimer
         {
-            Interval = TimeSpan.FromSeconds(5)
+            Interval = TimeSpan.FromSeconds(10)
         };
         _timer.Tick += (_, _) =>
         {
-            
+            SetValuesSaleCount();
             SetValuesSaleTotalSum();
             SetValueEff();
         };
@@ -77,8 +77,8 @@ public partial class HomePage : UserControl
         using (var dataWorker = new DataWorker())
         {
             List<Sale> sales = dataWorker.GetAllSales();
-            Console.WriteLine(sales.Count);
-            List<Sale> lastSale = new List<Sale>();
+            
+            
             DateTimePoint[] Values = Enumerable.Range(0, 10)
             .Select(i => DateTime.Today.AddDays(-9 + i))
             .Select(d => new DateTimePoint(d, sales.Where(s => s.Sale_DateTime.Date == d)
@@ -98,7 +98,7 @@ public partial class HomePage : UserControl
             DateTimePoint[] Values = Enumerable.Range(0, 10)
             .Select(i => DateTime.Today.AddDays(-9 + i))
             .Select(d => new DateTimePoint(
-                d, sales.Where(s => s.Sale_DateTime == d)
+                d, sales.Where(s => s.Sale_DateTime.Date == d)
                 .Sum(s => s.SaledProductCount)
             )).ToArray();
             SalesCount_XCL.Values = Values;

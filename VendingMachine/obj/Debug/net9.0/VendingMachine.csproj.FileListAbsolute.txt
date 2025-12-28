@@ -69,3 +69,4 @@ C:\Users\user\Desktop\Arina\IT\C#\Desktop\CsDesk06_VendingMachineApp\VendingMach
 C:\Users\user\Desktop\Arina\IT\C#\Desktop\CsDesk06_VendingMachineApp\VendingMachine\bin\Debug\net9.0\LiveChartsCore.SkiaSharpView.dll
 C:\Users\user\Desktop\Arina\IT\C#\Desktop\CsDesk06_VendingMachineApp\VendingMachine\bin\Debug\net9.0\LiveChartsCore.SkiaSharpView.Avalonia.dll
 C:\Users\user\Desktop\Arina\IT\C#\Desktop\CsDesk06_VendingMachineApp\VendingMachine\bin\Debug\net9.0\SkiaSharp.HarfBuzz.dll
+c:\Users\user\Desktop\Arina\IT\C#\Desktop\CsDesk06_VendingMachineApp\VendingMachine\obj\Debug\net9.0\VendingMachine.sourcelink.json

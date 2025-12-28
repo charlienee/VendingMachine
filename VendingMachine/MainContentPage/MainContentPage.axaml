@@ -67,16 +67,16 @@
           <ColumnDefinition Width="*"/>
           <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <TreeView x:Name="sidebar_tv" Background="#223">
-          <TreeViewItem Foreground="#DDD" FontSize="14">
+        <TreeView x:Name="sidebar_tv" Background="#223" SelectionChanged="MenuTree_SelectionChanged">
+          <TreeViewItem Foreground="#DDD" FontSize="14" Tag="Home">
             <TreeViewItem.Header>
               <StackPanel Orientation="Horizontal">
                 <Image Source="avares://VendingMachine/Image/SidebarIconHome.png" Width="25" Height="25"/>
-                <TextBlock Text=" Главная" VerticalAlignment="Center"/>
+                <TextBlock Text=" Главная" VerticalAlignment="Center" x:Name="Home_TWI"/>
               </StackPanel>
             </TreeViewItem.Header>
           </TreeViewItem>
-          <TreeViewItem Foreground="#DDD" FontSize="14">
+          <TreeViewItem Foreground="#DDD" FontSize="14"  Tag="MonitorVM">
             <TreeViewItem.Header>
               <StackPanel Orientation="Horizontal">
                 <Image Source="avares://VendingMachine/Image/SidebarIconMonVM.png" Width="25" Height="25"/>
@@ -109,8 +109,8 @@
                 <TextBlock Text=" Администрирование" VerticalAlignment="Center"/>
               </StackPanel>
             </TreeViewItem.Header>
-            <TreeViewItem Header="Торговые автоматы"/>
-            <TreeViewItem Header="Компании"/>
+            <TreeViewItem Header="Торговые автоматы" x:Name="VM_TWI" Tag="VM"/>
+            <TreeViewItem Header="Компании" x:Name="Company_TVI" Tag="Company"/>
             <TreeViewItem Header="Пользователи"/>
             <TreeViewItem Header="Модемы"/>
             <TreeViewItem Header="Дополнительные"/>

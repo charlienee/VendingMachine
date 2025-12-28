@@ -1640,11 +1640,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\user\\Desktop\\Arina\\IT\\C#\\Desktop\\CsDesk06_VendingMachineApp\\VendingMachine\\VendingMachine.csproj",
+      "projectUniqueName": "C:\\Users\\user\\Desktop\\Arina\\IT\\C#\\Desktop\\CsDesk06_VendingMachineApp\\VendingMachine\\VendingMachine.csproj",
       "projectName": "VendingMachine",
-      "projectPath": "c:\\Users\\user\\Desktop\\Arina\\IT\\C#\\Desktop\\CsDesk06_VendingMachineApp\\VendingMachine\\VendingMachine.csproj",
+      "projectPath": "C:\\Users\\user\\Desktop\\Arina\\IT\\C#\\Desktop\\CsDesk06_VendingMachineApp\\VendingMachine\\VendingMachine.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\user\\Desktop\\Arina\\IT\\C#\\Desktop\\CsDesk06_VendingMachineApp\\VendingMachine\\obj\\",
+      "outputPath": "C:\\Users\\user\\Desktop\\Arina\\IT\\C#\\Desktop\\CsDesk06_VendingMachineApp\\VendingMachine\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

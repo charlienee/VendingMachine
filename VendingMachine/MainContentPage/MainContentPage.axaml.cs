@@ -12,17 +12,42 @@ namespace VendingMachine;
 public partial class MainContentPage : UserControl
 {
     private UserControl _homePage;
+    private UserControl _companyPage;
     private bool _isMenuOpen;
     public MainContentPage(MainWindow mainWindow, User currentUser)
     {
         InitializeComponent();
         _homePage = new HomePage();
+        _companyPage = new CompanyPage(currentUser);
         _isMenuOpen = true;
         PageContent.Content = _homePage;
         ShowUserPicture(currentUser);
         ShowUserInfo(currentUser);
     }
 
+    private void MenuTree_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (sidebar_tv.SelectedItem is not TreeViewItem item)
+        {
+            return;
+        }
+        switch (item.Tag?.ToString())
+        {
+            case "Home":
+                PageContent.Content = new HomePage();
+                break;
+            case "VM":
+                PageContent.Content = new VmPage();
+                break;
+            case "Company":
+                PageContent.Content = _companyPage;
+                break;
+            case "MonitorVM":
+                PageContent.Content = new MonitorVMPage();
+                break;
+        }
+        sidebar_tv.SelectedItem = null;
+    }
     public void ShowUserPicture(User currentUser)
     {
         if (currentUser.Picture == null || currentUser.Picture.Length == 0)
