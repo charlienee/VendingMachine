@@ -14,8 +14,9 @@ namespace VendingMachine.Models
         public string Role {get;set;}
         public string Password {get;set;}
         public byte[]? Picture {get;set;}
+        public bool IsBlocked {get;set;}
 
-        public User (int id, string name, string surname, string middlename, string email, string phone, string role, string password, byte[] picture)
+        public User (int id, string name, string surname, string middlename, string email, string phone, string role, string password, byte[] picture, bool isBlocked)
         {
             ID_User = id;
             Name = name;
@@ -26,6 +27,7 @@ namespace VendingMachine.Models
             Role = role;
             Password = password;
             Picture = picture;
+            IsBlocked = isBlocked;
         }
     }
 }

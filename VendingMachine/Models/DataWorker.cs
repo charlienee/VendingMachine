@@ -34,7 +34,7 @@ namespace VendingMachine.Models
         public List<User> GetAllUser()
         {
             List<User> users = new List<User>();
-            string sql = "SELECT U.ID_USER, U.USERNAME, U.SURNAME, U.MIDDLE_NAME, U.EMAIL, U.PHONE, UR.USER_ROLE, U.USER_PASSWORD, U.ICON FROM USER_TABLE U JOIN USER_ROLE UR ON U.ROLE_ID = UR.ID_ROLE;";
+            string sql = "SELECT U.ID_USER, U.USERNAME, U.SURNAME, U.MIDDLE_NAME, U.EMAIL, U.PHONE, UR.USER_ROLE, U.USER_PASSWORD, U.ICON, U.IS_BLOCKED FROM USER_TABLE U JOIN USER_ROLE UR ON U.ROLE_ID = UR.ID_ROLE;";
             using (var command = new FbCommand(sql, _connection))
             using (var reader = command.ExecuteReader())
             {
@@ -55,7 +55,8 @@ namespace VendingMachine.Models
                         picture = new byte[length];
                         reader.GetBytes(8, 0, picture, 0, (int)length);
                     }
-                    users.Add(new User(id, name, surname, middlename, email, phone, role, password, picture));
+                    bool isBlocked = reader.GetBoolean(9);
+                    users.Add(new User(id, name, surname, middlename, email, phone, role, password, picture, isBlocked));
                     
                 }
             }
@@ -125,6 +126,14 @@ namespace VendingMachine.Models
                 }
             }
             return companies;
+        }
+        public void UpdateIsBlocked(int id, bool isBlocked)
+        {
+            string sql = @"UPDATE USER_TABLE SET IS_BLOCKED = @isBlocked WHERE ID_USER = @id;";
+            using var command = new FbCommand(sql, _connection);
+            command.Parameters.AddWithValue("@isBlocked", isBlocked);
+            command.Parameters.AddWithValue("@id", id);
+            int affected = command.ExecuteNonQuery();
         }
         public void UpdateUserPassword(int id, string password)
         {

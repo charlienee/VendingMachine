@@ -4,11 +4,13 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using VendingMachine.Models;
+using System.Collections.ObjectModel;
 
 namespace VendingMachine;
 
 public partial class CreateCompanyWindow : Window
 {
+    public event Action? CompanyCreated;
     private int codeCompany;
     public CreateCompanyWindow()
     {
@@ -34,6 +36,7 @@ public partial class CreateCompanyWindow : Window
             dataWorker.CreateCompany(codeCompany, CompanyName_tb.Text, Address_tb.Text, Website_tb.Text, Status_tb.Text, 
             ResponsiblePersonName_tb.Text, ResponsiblePersonSurname_tb.Text, ResponsiblePersonMiddlename_tb.Text, ResponsiblePersonEmail_tb.Text, ResponsiblePersonPhone_tb.Text);
         }
-        this.Close();
+        CompanyCreated?.Invoke();
+        Close();
     }
 }

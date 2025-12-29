@@ -3,13 +3,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="VendingMachine.CompanyPage">
+             x:Class="VendingMachine.CompanyPage" x:CompileBindings="False">
   <Grid RowDefinitions="Auto, Auto, *" Margin="20 10">
     <TextBlock Text="Компании" Margin="0 5"/>
     <Button Grid.Row="1" Content="Добавить компанию" x:Name="CreateCompany_btn" Click="CreateCompanyBtn_Click"/>
-    <!--ОБЯЗАТЕЛЬНО УЧТАНОВИТЬ ПАКЕТ NUGET И ДОБАВИТЬ СТИЛЬ В APP.AXAML -->
+    <!--ОБЯЗАТЕЛЬНО УСТАНОВИТЬ ПАКЕТ NUGET И ДОБАВИТЬ СТИЛЬ В APP.AXAML -->
     <DataGrid x:Name="Company_dg" Grid.Row="2"
-      AutoGenerateColumns="True" 
+      AutoGenerateColumns="False" Margin="0 10"
 		  GridLinesVisibility="All" 
 		  RowBackground="LightGray"
 		  IsReadOnly="True"
@@ -17,6 +17,14 @@
 		  CanUserResizeColumns="True"
 		  CanUserSortColumns="False"
       FontSize="10">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Код компании" Binding="{Binding CompanyCode}"/>
+        <DataGridTextColumn Header="Название" Binding="{Binding CompanyName}"/>
+        <DataGridTextColumn Header="Адрес" Binding="{Binding Address}"/>
+        <DataGridTextColumn Header="Сайт" Binding="{Binding Website}"/>
+        <DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
+        
+      </DataGrid.Columns>
       <DataGrid.Styles>
         <Style Selector="DataGridCell">
           <Setter Property="FontSize" Value="11"/>

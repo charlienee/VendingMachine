@@ -118,7 +118,14 @@ public partial class AuthendeficationPage : UserControl
                     currentUser = users.FirstOrDefault(u => u.Email == login_tb.Text.Trim());
                     if(currentUser?.Password == password_tb.Text.Trim())
                     {
-                        mainWindow.Navigate(new MainContentPage(this.mainWindow, currentUser));
+                        if (!currentUser.IsBlocked)
+                        {
+                            mainWindow.Navigate(new MainContentPage(this.mainWindow, currentUser));
+                        }
+                        else
+                        {
+                            infoMessage("Пользователь заблокирован");
+                        }
                     }
                     else
                     {
@@ -137,7 +144,14 @@ public partial class AuthendeficationPage : UserControl
                     currentUser = users.FirstOrDefault(u => u.Phone == Regex.Replace(login_tb.Text, @"\s", ""));
                     if(currentUser?.Password == password_tb.Text.Trim())
                     {
-                        mainWindow.Navigate(new MainContentPage(this.mainWindow, currentUser));
+                        if (!currentUser.IsBlocked)
+                        {
+                            mainWindow.Navigate(new MainContentPage(this.mainWindow, currentUser));
+                        }
+                        else
+                        {
+                            infoMessage("Пользователь заблокирован");
+                        }
                     }
                     else
                     {
