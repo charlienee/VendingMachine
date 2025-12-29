@@ -25,7 +25,12 @@ public partial class AuthendeficationPage : UserControl
         info_tb.IsVisible = true;
         info_tb.Text = infoText;
     }
-    public void enterButton_Click (object? sender, RoutedEventArgs e)
+    private void registrationBtn_Click(object? sender, RoutedEventArgs e)
+    {
+        var registrationWindow = new RegistrationClientWindow(mainWindow);
+        registrationWindow.ShowDialog(mainWindow);
+    }
+    private void enterButton_Click (object? sender, RoutedEventArgs e)
     {
         using (DataWorker dataWorker = new DataWorker())
         {

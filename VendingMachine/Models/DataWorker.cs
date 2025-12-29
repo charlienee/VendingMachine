@@ -105,6 +105,43 @@ namespace VendingMachine.Models
             }
             return sales;
         }
+        public List<Company> GetAllCompanies()
+        {
+            List<Company> companies = new List<Company>();
+            string sql = "SELECT COMPANY_CODE, COMPANY_NAME, ADDRESS, WEBSITE, RESPONSIBLE_PERSON_ID, STATUS FROM COMPANY;";
+            using (var command = new FbCommand(sql, _connection))
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32(0);
+                    string name = reader.GetString(1);
+                    string address = reader.GetString(2);
+                    string website = reader.GetString(3);
+                    int userId = reader.GetInt32(4);
+                    string status = reader.GetString(5);
+
+                    companies.Add(new Company(id, name, address, website, userId, status));
+                }
+            }
+            return companies;
+        }
+        public void UpdateUserPassword(int id, string password)
+        {
+            string sql = @"UPDATE USER_TABLE SET USER_PASSWORD = @password WHERE ID_USER = @id;";
+            using var command = new FbCommand(sql, _connection);
+            command.Parameters.AddWithValue("@password", password);
+            command.Parameters.AddWithValue("@id", id);
+            int affected = command.ExecuteNonQuery();
+        }
+        public void UpdateCompanyStatus(int code, string status)
+        {
+            string sql = "UPDATE COMPANY SET STATUS = @status WHERE COMPANY_CODE = @code;";
+            using var command = new FbCommand(sql, _connection);
+            command.Parameters.AddWithValue("@status", status);
+            command.Parameters.AddWithValue("@code", code);
+            int affected = command.ExecuteNonQuery();
+        }
         public int GeneratedUniqueCompanyCode()
         {
             int newCode = 0;

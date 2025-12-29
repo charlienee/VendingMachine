@@ -34,5 +34,6 @@ public partial class CreateCompanyWindow : Window
             dataWorker.CreateCompany(codeCompany, CompanyName_tb.Text, Address_tb.Text, Website_tb.Text, Status_tb.Text, 
             ResponsiblePersonName_tb.Text, ResponsiblePersonSurname_tb.Text, ResponsiblePersonMiddlename_tb.Text, ResponsiblePersonEmail_tb.Text, ResponsiblePersonPhone_tb.Text);
         }
+        this.Close();
     }
 }

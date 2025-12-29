@@ -11,5 +11,6 @@
     <TextBox x:Name="password_tb" Margin="0 5" Watermark="Введите пароль"/>
     <Button Content="Войти" Margin="0 5" x:Name="enter_btn" Click="enterButton_Click"/>
     <TextBlock x:Name="info_tb" IsVisible="False"/>
+    <Button Content="Регистрация клиента-франчайзи по коду" Click="registrationBtn_Click" Margin="0 5"/>
   </StackPanel>
 </UserControl>
