@@ -109,11 +109,11 @@
                 <TextBlock Text=" Администрирование" VerticalAlignment="Center"/>
               </StackPanel>
             </TreeViewItem.Header>
-            <TreeViewItem Header="Торговые автоматы" x:Name="VM_TWI" Tag="VM"/>
-            <TreeViewItem Header="Компании" x:Name="Company_TVI" Tag="Company"/>
-            <TreeViewItem Header="Пользователи"/>
-            <TreeViewItem Header="Модемы"/>
-            <TreeViewItem Header="Дополнительные"/>
+            <TreeViewItem Header="Торговые автоматы" x:Name="VM_TWI" Tag="VM" Foreground="#DDD"/>
+            <TreeViewItem Header="Компании" x:Name="Company_TVI" Tag="Company" Foreground="#DDD"/>
+            <TreeViewItem Header="Пользователи" Foreground="#DDD"/>
+            <TreeViewItem Header="Модемы" Foreground="#DDD"/>
+            <TreeViewItem Header="Дополнительные" Foreground="#DDD"/>
           </TreeViewItem>
         </TreeView>
         <ContentControl Grid.Column="1" x:Name="PageContent" Background="#DDD"/>

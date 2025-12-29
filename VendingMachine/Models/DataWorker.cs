@@ -17,6 +17,7 @@ namespace VendingMachine.Models
 
         private FbConnection _connection;
 
+        private static Random _random = new Random();
         public DataWorker()
         {
             try
@@ -103,6 +104,64 @@ namespace VendingMachine.Models
                 }
             }
             return sales;
+        }
+        public int GeneratedUniqueCompanyCode()
+        {
+            int newCode = 0;
+            bool isUnique = false;
+            int maxAttempts = 100;
+            int attepmt = 0;
+            while (!isUnique && attepmt < maxAttempts)
+            {
+                newCode = _random.Next(100000000, 1000000000);
+                using (var command = new FbCommand("SELECT COUNT(*) FROM COMPANY WHERE COMPANY_CODE = @code", _connection))
+                {
+                    command.Parameters.AddWithValue("@code", newCode);
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+                    if (count == 0)
+                    {
+                        isUnique = true;
+                    }
+                }
+                attepmt++;
+            }
+            if (!isUnique)
+            {
+                throw new Exception($"Не удалось сгенерировать уникальный код после {attepmt} попыток");
+                
+            }
+            return newCode;
+        }
+        public void CreateCompany(int companyCode, string companyName, string companyAddress, string companyWebsite, string status,
+        string name, string surname, string middlename, string email, string phone)
+        {
+            int userId;
+            using var command1 = new FbCommand("SELECT FIRST 1 ID_USER FROM USER_TABLE ORDER BY ID_USER DESC;", _connection);
+            userId = Convert.ToInt32(command1.ExecuteScalar()) + 1;
+            Console.WriteLine(userId);
+            
+            string sql = "INSERT INTO USER_TABLE (ID_USER, USERNAME, SURNAME, MIDDLE_NAME, EMAIL, PHONE, ROLE_ID)"
+            +"VALUES(@userId, @name, @surname, @middlename, @email, @phone, 2);";
+            using var command2 = new FbCommand(sql, _connection);
+            command2.Parameters.AddWithValue("@userId", userId);
+            command2.Parameters.AddWithValue("@name", name);
+            command2.Parameters.AddWithValue("@surname", surname);
+            command2.Parameters.AddWithValue("@middlename", middlename);
+            command2.Parameters.AddWithValue("@email", email);
+            command2.Parameters.AddWithValue("@phone", phone);
+            int affected = command2.ExecuteNonQuery();
+
+            sql = "INSERT INTO COMPANY (COMPANY_CODE, COMPANY_NAME, ADDRESS, WEBSITE, RESPONSIBLE_PERSON_ID, STATUS)"
+            +"VALUES (@companyCode, @companyName, @companyAddress, @companyWebsite, @userId, @status)";
+
+            using var command = new FbCommand(sql, _connection);
+            command.Parameters.AddWithValue("@companyCode", companyCode);
+            command.Parameters.AddWithValue("@companyName", companyName);
+            command.Parameters.AddWithValue("@companyAddress", companyAddress);
+            command.Parameters.AddWithValue("@companyWebsite", companyWebsite);
+            command.Parameters.AddWithValue("@userId", userId);
+            command.Parameters.AddWithValue("@status", status);
+            affected = command.ExecuteNonQuery();
         }
         public void Dispose()
         {
