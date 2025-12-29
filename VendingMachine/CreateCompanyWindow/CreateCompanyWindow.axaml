@@ -5,5 +5,32 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="VendingMachine.CreateCompanyWindow"
         Title="CreateCompanyWindow">
-  Welcome to Avalonia!
+  <Grid Margin="60 10" ColumnDefinitions="*, *">
+    <StackPanel Margin="5">
+      <TextBlock Text="Название компании" FontSize="12" Padding="3"/>
+      <TextBox Watermark="Введите название регистрируемой компании"/>
+      <TextBlock Text="Юридический адрес" FontSize="12" Padding="3"/>
+      <TextBox Watermark="Введите полный адрес регистрируемой компании"/>
+      <TextBlock Text="Адрес сайта компании" FontSize="12" Padding="3"/>
+      <TextBox Watermark="Введите адрес сайта регистрируемой компании"/>
+      <TextBlock Text="Код регистрации" FontSize="12" Padding="3"/>
+      <TextBox IsReadOnly="True"/>
+      <Button Content="Перегенирировать код регистрации" FontSize="12" Margin="5"/>
+    </StackPanel>
+    <StackPanel Grid.Column="1" Margin="5">
+      <TextBlock Text="Имя ответственного лица" FontSize="12" Padding="3"/>
+      <TextBox Watermark="Введите имя ответственного лица"/>
+      <TextBlock Text="Фамилия ответственного лица" FontSize="12" Padding="3"/>
+      <TextBox Watermark="Введите фамилию ответственного лица"/>
+      <TextBlock Text="Отчество ответственного лица" FontSize="12" Padding="3"/>
+      <TextBox Watermark="Введите отчество ответственного лица"/>
+      <TextBlock Text="Телефон ответственного лица" FontSize="12" Padding="3"/>
+      <TextBox Watermark="Введите телефон ответственного лица"/>
+      <TextBlock Text="Email ответственного лица" FontSize="12" Padding="3"/>
+      <TextBox Watermark="Введите email ответственного лица"/>
+      <TextBlock Text="Статус" FontSize="12" Padding="3"/>
+      <TextBox IsReadOnly="True" Text="Заключен договор"/>
+      <Button Content="Добавить компанию" FontSize="12" Margin="5"/>
+    </StackPanel>
+  </Grid>
 </Window>

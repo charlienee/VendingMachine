@@ -18,7 +18,7 @@ public partial class MainContentPage : UserControl
     {
         InitializeComponent();
         _homePage = new HomePage();
-        _companyPage = new CompanyPage(currentUser);
+        _companyPage = new CompanyPage(currentUser, mainWindow);
         _isMenuOpen = true;
         PageContent.Content = _homePage;
         ShowUserPicture(currentUser);
