@@ -6,7 +6,7 @@
              x:Class="VendingMachine.AuthendeficationPage">
   <StackPanel Margin="100 50">
     <TextBlock x:Name="login_tblock">Ваш логин:</TextBlock>
-    <TextBox x:Name="login_tb" Margin="0 5" Watermark="Введите email или телефон"/>
+    <TextBox x:Name="login_tb" Margin="0 5" Watermark="Введите email или телефон" TextChanged="loginTB_OnTextChanged"/>
     <TextBlock x:Name="password_tblock">Ваш пароль:</TextBlock>
     <TextBox x:Name="password_tb" Margin="0 5" Watermark="Введите пароль"/>
     <Button Content="Войти" Margin="0 5" x:Name="enter_btn" Click="enterButton_Click"/>

@@ -40,7 +40,7 @@
                 </StackPanel>
               </MenuItem.Header>
             </MenuItem>
-            <MenuItem>
+            <MenuItem Click="ExitMenuItem_Click">
               <MenuItem.Header>
                 <StackPanel Orientation="Horizontal">
                   <Image Source="avares://VendingMachine/Image/UserMenuIconExit.png" Width="25" Height="25"/>

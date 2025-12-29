@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+using System.Reflection.Metadata;
 using System.Runtime.Serialization;
 using Avalonia;
 using Avalonia.Controls;
@@ -13,10 +15,15 @@ public partial class CompanyPage : UserControl
     public CompanyPage(User currentUser, MainWindow mainWindow)
     {
         InitializeComponent();
+
         _mainWindow = mainWindow;
         if (currentUser.Role != "Менеджер")
         {
             CreateCompany_btn.IsVisible = false;
+        }
+        using (var dataWorker = new DataWorker())
+        {
+            Company_dg.ItemsSource = new ObservableCollection<Company>(dataWorker.GetAllCompanies());
         }
     }
     private void CreateCompanyBtn_Click(object? sender, RoutedEventArgs e)

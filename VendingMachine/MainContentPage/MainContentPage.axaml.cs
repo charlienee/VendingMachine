@@ -11,11 +11,13 @@ namespace VendingMachine;
 
 public partial class MainContentPage : UserControl
 {
+    private MainWindow mainWindow;
     private UserControl _homePage;
     private UserControl _companyPage;
     private bool _isMenuOpen;
     public MainContentPage(MainWindow mainWindow, User currentUser)
     {
+        this.mainWindow = mainWindow;
         InitializeComponent();
         _homePage = new HomePage();
         _companyPage = new CompanyPage(currentUser, mainWindow);
@@ -24,7 +26,10 @@ public partial class MainContentPage : UserControl
         ShowUserPicture(currentUser);
         ShowUserInfo(currentUser);
     }
-
+    private void ExitMenuItem_Click(object? sender, RoutedEventArgs e)
+    {
+        mainWindow.Navigate(new AuthendeficationPage(mainWindow));
+    }
     private void MenuTree_SelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (sidebar_tv.SelectedItem is not TreeViewItem item)
