@@ -42,7 +42,7 @@
         <TabItem Header="По сумме" FontSize="14">
           <lvc:CartesianChart>
             <lvc:CartesianChart.Series>
-              <lvc:XamlColumnSeries x:Name="SalesTotalSum_XCL" Padding="10" MaxBarWidth="60" Fill="#6797be7b" Stroke="#92b8d7ff"/>
+              <lvc:XamlColumnSeries x:Name="SalesTotalSum_XCL" Padding="10" MaxBarWidth="60" Fill="#2a76b4e4" Stroke="#4278a5ff"/>
             </lvc:CartesianChart.Series>
             <lvc:CartesianChart.XAxes>
               <lvc:XamlDateTimeAxis x:Name="SalesTotalSum_XDTA" ForceStepToMin="True" Interval="1.00:00:00" TextSize="10"/>
@@ -52,7 +52,7 @@
         <TabItem Header="По количеству" FontSize="14">
           <lvc:CartesianChart>
             <lvc:CartesianChart.Series>
-              <lvc:XamlColumnSeries x:Name="SalesCount_XCL" Padding="10" MaxBarWidth="60" Fill="#6797be7b" Stroke="#92b8d7ff"/>
+              <lvc:XamlColumnSeries x:Name="SalesCount_XCL" Padding="10" MaxBarWidth="60" Fill="#2a76b4e4" Stroke="#4278a5ff"/>
             </lvc:CartesianChart.Series>
             <lvc:CartesianChart.XAxes>
               <lvc:XamlDateTimeAxis x:Name="SalesCount_XDTA" ForceStepToMin="True" Interval="1.00:00:00" TextSize="10"/>

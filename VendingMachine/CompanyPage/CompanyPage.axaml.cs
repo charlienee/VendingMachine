@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using System.Reflection.Metadata;
 using System.Runtime.Serialization;
@@ -11,11 +12,12 @@ namespace VendingMachine;
 
 public partial class CompanyPage : UserControl
 {
+    public ObservableCollection<Company> Companies {get; set;}
     private MainWindow _mainWindow;
     public CompanyPage(User currentUser, MainWindow mainWindow)
     {
         InitializeComponent();
-
+        DataContext = this;
         _mainWindow = mainWindow;
         if (currentUser.Role != "Менеджер")
         {
@@ -23,7 +25,9 @@ public partial class CompanyPage : UserControl
         }
         using (var dataWorker = new DataWorker())
         {
-            Company_dg.ItemsSource = new ObservableCollection<Company>(dataWorker.GetAllCompanies());
+            Companies = new ObservableCollection<Company>(dataWorker.GetAllCompanies());
+            Console.WriteLine(Companies.Count);
+            Company_dg.ItemsSource = Companies;
         }
     }
     private void CreateCompanyBtn_Click(object? sender, RoutedEventArgs e)
