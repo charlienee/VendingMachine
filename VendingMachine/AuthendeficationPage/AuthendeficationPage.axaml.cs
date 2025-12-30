@@ -14,13 +14,12 @@ namespace VendingMachine;
 public partial class AuthendeficationPage : UserControl
 {
     public MainWindow mainWindow;
-    private bool _isEmailMode;
     public AuthendeficationPage(MainWindow mainWindow)
     {
         InitializeComponent();
         this.mainWindow = mainWindow;
     }
-
+    
     public void infoMessage(string infoText)
     {
         info_tb.IsVisible = true;
@@ -49,7 +48,6 @@ public partial class AuthendeficationPage : UserControl
             }
             return;
         }
-        _isEmailMode = false;
         var digits = new string(text.Where(char.IsDigit).ToArray());
         textBox.Text = FormatPhone(digits);
         textBox.CaretIndex = textBox.Text.Length;
