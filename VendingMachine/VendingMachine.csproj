@@ -19,6 +19,8 @@
     <AvaloniaResource Include="Image\SidebarIconRep.png" />
     <AvaloniaResource Include="Image\SidebarIconTMC.png" />
     <AvaloniaResource Include="Image\SidebarIconAdm.png" />
+    <AvaloniaResource Include="Image\EditIcon.png"/>
+    <AvaloniaResource Include="Image\DeleteIcon.png"/>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.2.1" />

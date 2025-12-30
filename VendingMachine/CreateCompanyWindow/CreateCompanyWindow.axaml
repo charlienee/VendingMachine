@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="VendingMachine.CreateCompanyWindow"
+        x:Class="VendingMachine.CreateCompanyWindow" Icon="avares://VendingMachine/Image/AppIconVM.jpg"
         Title="CreateCompanyWindow">
   <Grid Margin="60 10" ColumnDefinitions="*, *">
     <StackPanel Margin="5">
@@ -25,12 +25,14 @@
       <TextBlock Text="Отчество ответственного лица" FontSize="12" Padding="3"/>
       <TextBox Watermark="Введите отчество ответственного лица" x:Name="ResponsiblePersonMiddlename_tb"/>
       <TextBlock Text="Телефон ответственного лица" FontSize="12" Padding="3"/>
-      <TextBox Watermark="Введите телефон ответственного лица" x:Name="ResponsiblePersonPhone_tb"/>
+      <TextBox Watermark="Введите телефон ответственного лица" x:Name="ResponsiblePersonPhone_tb"
+        TextChanged="ResponsiblePersonPhoneTb_OnTextChanged"/>
       <TextBlock Text="Email ответственного лица" FontSize="12" Padding="3"/>
       <TextBox Watermark="Введите email ответственного лица" x:Name="ResponsiblePersonEmail_tb"/>
       <TextBlock Text="Статус" FontSize="12" Padding="3"/>
       <TextBox IsReadOnly="True" Text="Заключен договор" x:Name="Status_tb"/>
       <Button Content="Добавить компанию" FontSize="12" Margin="5" Click="CreateCompanyBtn_Click"/>
+      <TextBlock x:Name="info_tb" IsVisible="False"/>
     </StackPanel>
   </Grid>
 </Window>

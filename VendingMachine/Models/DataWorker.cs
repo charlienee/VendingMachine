@@ -127,6 +127,13 @@ namespace VendingMachine.Models
             }
             return companies;
         }
+        public void DeleteCompany(int companyCode)
+        {
+            string sql = @"DELETE FROM COMPANY WHERE COMPANY_CODE = @companyCode";
+            using var command = new FbCommand(sql, _connection);
+            command.Parameters.AddWithValue("@companyCode", companyCode);
+            int affected = command.ExecuteNonQuery();
+        }
         public void UpdateIsBlocked(int id, bool isBlocked)
         {
             string sql = @"UPDATE USER_TABLE SET IS_BLOCKED = @isBlocked WHERE ID_USER = @id;";

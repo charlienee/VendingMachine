@@ -94,7 +94,7 @@ public partial class AuthendeficationPage : UserControl
         return digits.Length switch
         {
             <= 1 => "+7",
-            <= 4 => $"+7 ({digits.Substring(1)})",
+            <= 4 => $"+7 ({digits.Substring(1)}",
             <= 7 => $"+7 ({digits.Substring(1, 3)}) {digits.Substring(4)}",
             <= 9 => $"+7 ({digits.Substring(1, 3)}) {digits.Substring(4, 3)}-{digits.Substring(7)}",
             <= 10 => $"+7 ({digits.Substring(1, 3)}) {digits.Substring(4, 3)}-{digits.Substring(7, 2)}-{digits.Substring(9)}",

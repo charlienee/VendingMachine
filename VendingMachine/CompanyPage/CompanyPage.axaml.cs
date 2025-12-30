@@ -28,16 +28,13 @@ public partial class CompanyPage : UserControl
         DataContext = this;
         _mainWindow = mainWindow;
         UpdateCompanies();
-        Company_dg.Columns.Add(new DataGridTemplateColumn
-        {
-            Header = "Действия"
-        });
+        
         UpdateActionCompanies();
         CreateCompany_btn.IsVisible = currentUser.Role == "Менеджер";
     }
     public void UpdateActionCompanies()
     {
-        var actionColumn = Company_dg.Columns.OfType<DataGridTemplateColumn>().FirstOrDefault(c => c.Header?.ToString() == "Действия");
+        var actionColumn = Company_dg.Columns.OfType<DataGridTemplateColumn>().FirstOrDefault(c => c.Header?.ToString() == "Настройка статуса");
         if (actionColumn == null)
             return;
         actionColumn.CellTemplate = new FuncDataTemplate<Company>((company, _)=>
@@ -59,6 +56,18 @@ public partial class CompanyPage : UserControl
             panel.Children.Add(blockBTN);
             return panel;
         });
+    }
+    public void DeleteCompanyBtn_Click(object? sender, RoutedEventArgs e)
+    {
+        if (sender is Button button && button.DataContext is Company company)
+        {
+            using (var dataWorker = new DataWorker())
+            {
+                dataWorker.DeleteCompany(company.CompanyCode);
+            }
+        }
+        UpdateCompanies();
+        UpdateActionCompanies();
     }
     public void BlockBtn_Click(object? sender, RoutedEventArgs e)
     {

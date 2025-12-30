@@ -23,7 +23,21 @@
         <DataGridTextColumn Header="Адрес" Binding="{Binding Address}"/>
         <DataGridTextColumn Header="Сайт" Binding="{Binding Website}"/>
         <DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
-        
+        <DataGridTemplateColumn Header="Действия">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Horizontal">
+                <Button Click="DeleteCompanyBtn_Click">
+                  <Image Source="avares://VendingMachine/Image/DeleteIcon.png" Width="15" Height="15"/>
+                </Button>
+                <Button Content="Редактировать">
+                  <Image Source="avares://VendingMachine/Image/EditIcon.png" Width="15" Height="15"/>
+                </Button>
+              </StackPanel>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn Header="Настройка статуса"/>
       </DataGrid.Columns>
       <DataGrid.Styles>
         <Style Selector="DataGridCell">
