@@ -18,6 +18,7 @@
         <TextBlock Text=" записей" VerticalAlignment="Center"/>
       </StackPanel>
       <TextBox Watermark="Поиск" TextChanged="SearchTB_TextChanged" Margin="5 0" x:Name="SearchTB"/>
+      <Button DockPanel.Dock="Right" Content="Экспорт в csv" Click="ReportCSVBtn_Click"/>
     </DockPanel>
     <!--ОБЯЗАТЕЛЬНО УСТАНОВИТЬ ПАКЕТ NUGET И ДОБАВИТЬ СТИЛЬ В APP.AXAML -->
     <DataGrid x:Name="Company_dg" Grid.Row="3"

@@ -1,30 +1,10 @@
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Templates;
-using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
-using VendingMachine.Models;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Avalonia.Platform.Storage;
-using System.IO;
-
-namespace VendingMachine;
-
 public partial class CompanyPage : UserControl
 {
-    private bool _isManager;
-    private List<Company> _allCompanies;
-    private List<Company> _filteredCompanies;
+    private int _pageSize = 5;
+    private int _currentPage = 1;
+    private List<Company> _allCompanies {get; set;}
+    private List<Company> _filteredCompanies {get; set;}
     private User _currentUser;
-    private readonly Paginator<Company> _paginator = new(5);
-    private readonly TextFilter<Company> _companyFilter = new(c => c.CompanyName);
     private MainWindow _mainWindow;
     public CompanyPage()
     {
@@ -34,7 +14,6 @@ public partial class CompanyPage : UserControl
     public CompanyPage(User currentUser, MainWindow mainWindow) : this()
     {
         _currentUser = currentUser;
-        _isManager = _currentUser.Role == "Менеджер";
         _mainWindow = mainWindow;
 
         DataContext = this;
@@ -42,7 +21,7 @@ public partial class CompanyPage : UserControl
         InitializeActionColumn();
         ApplyPagination();
 
-        CreateCompany_btn.IsVisible = _isManager;
+        CreateCompany_btn.IsVisible = currentUser.Role == "Менеджер";
     }
     private void LoadAllCompanies()
     {
@@ -53,16 +32,23 @@ public partial class CompanyPage : UserControl
     private void ReloadCompanies()
     {
         LoadAllCompanies();
-        _paginator.Reset();
+        ResetPagination();
         ApplyPagination();
     }
-    private void ApplySearch(string searchText)
+    private void ApplySearchFilter(string searchText)
     {
-        
-        _filteredCompanies = _companyFilter
-            .Apply(_allCompanies, searchText)
-            .ToList();
-        _paginator.Reset();
+        if (string.IsNullOrWhiteSpace(searchText))
+        {
+            _filteredCompanies = _allCompanies;
+        }
+        else
+        {
+            _filteredCompanies = _allCompanies
+                .Where(c => c.CompanyName
+                .Contains(searchText, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+        ResetPagination();
         ApplyPagination();
     }
     private void ResetSearchFilter()
@@ -71,8 +57,12 @@ public partial class CompanyPage : UserControl
     }
     private void ApplyPagination()
     {
-        Company_dg.ItemsSource = new ObservableCollection<Company>(_paginator.Apply(_filteredCompanies));
-        currentPageTb.Text=_paginator.CurrentPage.ToString();
+        Company_dg.ItemsSource = new ObservableCollection<Company>(_filteredCompanies.Skip((_currentPage - 1) * _pageSize).Take(_pageSize));
+        currentPageTb.Text=_currentPage.ToString();
+    }
+    private void ResetPagination()
+    {
+        _currentPage = 1;
     }
     private void InitializeActionColumn()
     {
@@ -93,12 +83,12 @@ public partial class CompanyPage : UserControl
             var activateBTN = new Button
             {
                 Content="Активировать",
-                IsVisible = _isManager && company.Status == "Привязка пользователя"
+                IsVisible = _currentUser.Role == "Менеджер" && company.Status == "Привязка пользователя"
             };
             var blockBTN = new Button
             {
                 Content="Заблокировать",
-                IsVisible = _isManager && company.Status == "Активно"
+                IsVisible = _currentUser.Role == "Менеджер" && company.Status == "Активно"
             };
             activateBTN.Click += ActivateCompanyBtn_Click;
             blockBTN.Click += BlockBtn_Click;
@@ -120,14 +110,14 @@ public partial class CompanyPage : UserControl
     {
         if (!IsInitialized || sender is not ComboBox comboBox)
             return;
-        _paginator.PageSize = comboBox.SelectedIndex
+        _pageSize = comboBox.SelectedIndex
         switch
         {
             0 => 5,
             1 => 10,
             _ => _filteredCompanies.Count
         };
-        _paginator.Reset();
+        ResetPagination();
         ApplyPagination();
     }
     //Search by company name
@@ -136,7 +126,7 @@ public partial class CompanyPage : UserControl
         if (!IsInitialized || sender is not TextBox textBox)
             return;
 
-        ApplySearch(textBox.Text);
+        ApplySearchFilter(textBox.Text);
     }
     
     //Companies buttons click
@@ -170,50 +160,23 @@ public partial class CompanyPage : UserControl
     }
 
     //Next and back page
+    private bool CanMoveToNextPage()
+    {
+        return _currentPage * _pageSize < _filteredCompanies.Count();
+    }
     private void NextPageBtn_Click(object? sender, RoutedEventArgs e)
     {
-        if (!_paginator.CanMoveNext(_filteredCompanies.Count))
+        if (!CanMoveToNextPage())
             return;
-        _paginator.MoveNext();
+        _currentPage ++;
         ApplyPagination();
     }
     private void BackPageBtn_Click(object? sender, RoutedEventArgs e)
     {
-        _paginator.MovePrevious();
+        if (_currentPage <= 1)
+            return;
+        _currentPage --;
         ApplyPagination();
     }
 
-    private async void ReportCSVBtn_Click(object? sender, RoutedEventArgs e)
-    {
-        var folderPath = await SelectFolder(_mainWindow);
-        if (string.IsNullOrEmpty(folderPath))
-            return;
-        ImportCSV(folderPath, string.Join(Environment.NewLine, _allCompanies.Select(c => $"{c.CompanyCode};{c.CompanyName};{c.Address};{c.Website};{c.Status}")));
-    }
-    public async Task<string> SelectFolder(Window parentWindow)
-    {
-        string folderPath = AppContext.BaseDirectory;
-        var topLevel = TopLevel.GetTopLevel(parentWindow);
-        if (topLevel == null)
-        {
-            return folderPath;
-        }
-        var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(
-            new FolderPickerOpenOptions
-            {
-                Title = "Выберите папку",
-                AllowMultiple = false
-            }
-        );
-        if (folders.Count > 0)
-        {
-            folderPath = folders[0].Path.LocalPath;
-        }
-        return folderPath;
-    }
-    public void ImportCSV(string folderPath, string text)
-    {
-        var fullPath = Path.Combine(folderPath, $"CompaniesReport.csv");
-        File.WriteAllText(fullPath, text);
-    }
 }
