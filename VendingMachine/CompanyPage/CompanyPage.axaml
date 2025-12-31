@@ -17,7 +17,7 @@
         </ComboBox>
         <TextBlock Text=" записей" VerticalAlignment="Center"/>
       </StackPanel>
-      <TextBox Watermark="Поиск" TextChanged="SearchTB_TextChanged"/>
+      <TextBox Watermark="Поиск" TextChanged="SearchTB_TextChanged" Margin="5 0" x:Name="SearchTB"/>
     </DockPanel>
     <!--ОБЯЗАТЕЛЬНО УСТАНОВИТЬ ПАКЕТ NUGET И ДОБАВИТЬ СТИЛЬ В APP.AXAML -->
     <DataGrid x:Name="Company_dg" Grid.Row="3"
@@ -69,6 +69,7 @@
         <TextBlock Text="1" VerticalAlignment="Center" x:Name="currentPageTb" Margin="3 0"/>
         <Button Content=">" Click="NextPageBtn_Click"/>
       </StackPanel>
+      <TextBlock DockPanel.Dock="Left" x:Name="CountTB"/>
     </DockPanel>
   </Grid>
 </UserControl>

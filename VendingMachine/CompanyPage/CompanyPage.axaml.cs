@@ -17,101 +17,86 @@ namespace VendingMachine;
 
 public partial class CompanyPage : UserControl
 {
-    private int PageSize = 5;
-    private int _currentPage = 1;
-    public List<Company> AllCompanies {get; set;}
-    public List<Company> Companies {get; set;}
-    private User user;
+    private bool _isManager;
+    private List<Company> _allCompanies;
+    private List<Company> _filteredCompanies;
+    private User _currentUser;
+    private readonly Paginator<Company> _paginator = new(5);
+    private readonly TextFilter<Company> _companyFilter = new(c => c.CompanyName);
     private MainWindow _mainWindow;
     public CompanyPage()
     {
         InitializeComponent();
-        using (var dataWorker = new DataWorker())
-        {
-            AllCompanies = dataWorker.GetAllCompanies();
-            Companies = AllCompanies;
-        }
+        LoadAllCompanies();
     }
     public CompanyPage(User currentUser, MainWindow mainWindow) : this()
     {
-        user = currentUser;
-        DataContext = this;
+        _currentUser = currentUser;
+        _isManager = _currentUser.Role == "Менеджер";
         _mainWindow = mainWindow;
-        UpdateCompanies();
+
+        DataContext = this;
         
-        UpdateActionCompanies();
-        CreateCompany_btn.IsVisible = currentUser.Role == "Менеджер";
+        InitializeActionColumn();
+        ApplyPagination();
+
+        CreateCompany_btn.IsVisible = _isManager;
     }
-    //Create company
-    private void CreateCompanyBtn_Click(object? sender, RoutedEventArgs e)
+    private void LoadAllCompanies()
     {
-        var createCompanyWindow = new CreateCompanyWindow();
-        createCompanyWindow.CompanyCreated += UpdateCompanies;
-        createCompanyWindow.ShowDialog(_mainWindow);
+        using var db = new DataWorker();
+        _allCompanies = db.GetAllCompanies();
+        _filteredCompanies = _allCompanies;
     }
-    //Change size page
-    private void PageSizeCB_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+    private void ReloadCompanies()
     {
-        if (!IsInitialized)
-        {
-            return;
-        }
-        if (sender is ComboBox comboBox && comboBox.SelectedItem is ComboBoxItem item)
-        {
-            var value = item.Content?.ToString() ?? string.Empty;
-            switch (value)
-            {
-                case "5":
-                    PageSize = 5;
-                    break;
-                case "10":
-                    PageSize = 10;
-                    break;
-                case "Все":
-                    PageSize = AllCompanies.Count;
-                    break;
-            }
-        }
-        UpdateCompanies();
-        UpdateActionCompanies();
+        LoadAllCompanies();
+        _paginator.Reset();
+        ApplyPagination();
     }
-    //Search by company name
-    private void SearchTB_TextChanged(object? sender, TextChangedEventArgs e)
+    private void ApplySearch(string searchText)
     {
-        if (!IsInitialized)
-        {
-            return;
-        }
-        if (sender is not TextBox textBox)
-            return;
-        if (textBox.Text?.Trim() == string.Empty || textBox.Text == null)
-        {
-            Companies = AllCompanies;
-        }
-        else
-            Companies = new List<Company>(AllCompanies.Where(c => c.CompanyName.Contains(textBox.Text)));
-        UpdateCompanies();
-        UpdateActionCompanies();
+        
+        _filteredCompanies = _companyFilter
+            .Apply(_allCompanies, searchText)
+            .ToList();
+        _paginator.Reset();
+        ApplyPagination();
     }
-    
-    //Update data in company datagrid
-    public void UpdateActionCompanies()
+    private void ResetSearchFilter()
+    {
+        SearchTB.Text = string.Empty;
+    }
+    private void ApplyPagination()
+    {
+        Company_dg.ItemsSource = new ObservableCollection<Company>(_paginator.Apply(_filteredCompanies));
+        currentPageTb.Text=_paginator.CurrentPage.ToString();
+    }
+    private void InitializeActionColumn()
     {
         var actionColumn = Company_dg.Columns.OfType<DataGridTemplateColumn>().FirstOrDefault(c => c.Header?.ToString() == "Настройка статуса");
         if (actionColumn == null)
             return;
-        actionColumn.CellTemplate = new FuncDataTemplate<Company>((company, _)=>
+        actionColumn.CellTemplate = CreateActionTemplate();
+    }
+    private IDataTemplate CreateActionTemplate()
+    {
+        return new FuncDataTemplate<Company>((company, _) =>
         {
-            var panel = new StackPanel{Orientation = Avalonia.Layout.Orientation.Horizontal, Spacing=4};
+            var panel = new StackPanel
+            {
+                Orientation = Avalonia.Layout.Orientation.Horizontal, 
+                Spacing = 4
+            };
             var activateBTN = new Button
             {
                 Content="Активировать",
-                IsVisible = user.Role == "Менеджер" && company.Status == "Привязка пользователя"
+                IsVisible = _isManager && company.Status == "Привязка пользователя"
             };
             var blockBTN = new Button
             {
                 Content="Заблокировать",
-                IsVisible = user.Role == "Менеджер" && company.Status == "Активно"
+                IsVisible = _isManager && company.Status == "Активно"
             };
             activateBTN.Click += ActivateCompanyBtn_Click;
             blockBTN.Click += BlockBtn_Click;
@@ -120,73 +105,80 @@ public partial class CompanyPage : UserControl
             return panel;
         });
     }
-    public void UpdateCompanies()
+    //Create company
+    private void CreateCompanyBtn_Click(object? sender, RoutedEventArgs e)
     {
-        using (var dataWorker = new DataWorker())
-        {
-            
-            Companies = new List<Company>(Companies);
-            Company_dg.ItemsSource = new ObservableCollection<Company>(Companies.Skip((_currentPage - 1) * PageSize).Take(PageSize));
-            currentPageTb.Text=_currentPage.ToString();
-        }
+        var window = new CreateCompanyWindow();
+        window.CompanyCreated += ReloadCompanies;
+        window.ShowDialog(_mainWindow);
+        SearchTB.Text = string.Empty;
     }
+    //Change size page
+    private void PageSizeCB_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        if (!IsInitialized || sender is not ComboBox comboBox)
+            return;
+        _paginator.PageSize = comboBox.SelectedIndex
+        switch
+        {
+            0 => 5,
+            1 => 10,
+            _ => _filteredCompanies.Count
+        };
+        _paginator.Reset();
+        ApplyPagination();
+    }
+    //Search by company name
+    private void SearchTB_TextChanged(object? sender, TextChangedEventArgs e)
+    {
+        if (!IsInitialized || sender is not TextBox textBox)
+            return;
+
+        ApplySearch(textBox.Text);
+    }
+    
     //Companies buttons click
     public void DeleteCompanyBtn_Click(object? sender, RoutedEventArgs e)
     {
-        if (sender is Button button && button.DataContext is Company company)
-        {
-            using (var dataWorker = new DataWorker())
-            {
-                dataWorker.DeleteCompany(company.CompanyCode);
-            }
-        }
-        UpdateCompanies();
-        UpdateActionCompanies();
+        if (sender is not Button {DataContext: Company company})
+            return;
+        using var dataWorker = new DataWorker();
+        dataWorker.DeleteCompany(company.CompanyCode);
+        ResetSearchFilter();
+        LoadAllCompanies();
+        ApplyPagination();
     }
     public void BlockBtn_Click(object? sender, RoutedEventArgs e)
     {
-        if (sender is Button button && button.DataContext is Company company)
-        {
-            using (var dataWorker = new DataWorker())
-            {
-                dataWorker.UpdateCompanyStatus(company.CompanyCode, "Заблокировано");
-                dataWorker.UpdateIsBlocked(company.UserId, true);
-            }
-        }
-        UpdateCompanies();
-        UpdateActionCompanies();
+        if (sender is not Button {DataContext: Company company})
+            return;
+        using var dataWorker = new DataWorker();
+        dataWorker.UpdateCompanyStatus(company.CompanyCode, "Заблокировано");
+        LoadAllCompanies();
+        ApplyPagination();
     }
     public void ActivateCompanyBtn_Click(object? sender, RoutedEventArgs e)
     {
-        if (sender is Button button && button.DataContext is Company company)
-        {
-            using (var dataWorker = new DataWorker())
-            {
-                dataWorker.UpdateCompanyStatus(company.CompanyCode, "Активно");
-            }
-        }
-        UpdateCompanies();
-        UpdateActionCompanies();
+        if (sender is not Button {DataContext: Company company})
+            return;
+        using var dataWorker = new DataWorker();
+        dataWorker.UpdateCompanyStatus(company.CompanyCode, "Активно");
+        LoadAllCompanies();
+        ApplyPagination();
     }
 
     //Next and back page
     private void NextPageBtn_Click(object? sender, RoutedEventArgs e)
     {
-        if (AllCompanies.Count <= _currentPage*PageSize)
-        {
+        if (!_paginator.CanMoveNext(_filteredCompanies.Count))
             return;
-        }
-        _currentPage += 1;
-        UpdateCompanies();
+        _paginator.MoveNext();
+        ApplyPagination();
     }
     private void BackPageBtn_Click(object? sender, RoutedEventArgs e)
     {
-        if (_currentPage <= 1)
-        {
-            return;
-        }
-        _currentPage -= 1;
-        UpdateCompanies();
+        _paginator.MovePrevious();
+        ApplyPagination();
     }
 
 }
