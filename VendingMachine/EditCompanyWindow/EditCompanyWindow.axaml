@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="VendingMachine.EditCompanyWindow" Icon="avares://VendingMachine/Image/AppIconVM.jpg"
+        Title="EditCompanyWindow">
+  <Grid Margin="60 10" ColumnDefinitions="*, *">
+    <StackPanel Margin="5">
+      <TextBlock Text="Название компании" FontSize="12" Padding="3"/>
+      <TextBox Watermark="Введите название регистрируемой компании" x:Name="CompanyName_tb"/>
+      <TextBlock Text="Юридический адрес" FontSize="12" Padding="3"/>
+      <TextBox Watermark="Введите полный адрес регистрируемой компании" x:Name="Address_tb"/>
+      <TextBlock Text="Адрес сайта компании" FontSize="12" Padding="3"/>
+      <TextBox Watermark="Введите адрес сайта регистрируемой компании" x:Name="Website_tb"/>
+      <TextBlock Text="Код регистрации" FontSize="12" Padding="3"/>
+      <TextBox IsReadOnly="True" x:Name="Code_tb"/>
+    </StackPanel>
+    <StackPanel Grid.Column="1" Margin="5">
+      <TextBlock Text="Имя ответственного лица" FontSize="12" Padding="3"/>
+      <TextBox x:Name="ResponsiblePersonName_tb" IsReadOnly="True"/>
+      <TextBlock Text="Фамилия ответственного лица" FontSize="12" Padding="3"/>
+      <TextBox x:Name="ResponsiblePersonSurname_tb" IsReadOnly="True"/>
+      <TextBlock Text="Отчество ответственного лица" FontSize="12" Padding="3"/>
+      <TextBox x:Name="ResponsiblePersonMiddlename_tb" IsReadOnly="True"/>
+      <TextBlock Text="Телефон ответственного лица" FontSize="12" Padding="3"/>
+      <TextBox x:Name="ResponsiblePersonPhone_tb" IsReadOnly="True"/>
+      <TextBlock Text="Email ответственного лица" FontSize="12" Padding="3"/>
+      <TextBox x:Name="ResponsiblePersonEmail_tb" IsReadOnly="True"/>
+      <TextBlock Text="Статус" FontSize="12" Padding="3"/>
+      <TextBox IsReadOnly="True" Text="Заключен договор" x:Name="Status_tb"/>
+      <Button Content="Сохранить" FontSize="12" Margin="5" Click="SaveChange"/>
+      <TextBlock x:Name="info_tb" IsVisible="False"/>
+    </StackPanel>
+  </Grid>
+</Window>

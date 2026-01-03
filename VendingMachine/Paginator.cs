@@ -28,6 +28,7 @@ public class Paginator<T>
         if (CurrentPage > 1)
             CurrentPage--;
     }
+
     public void Reset()
     {
         CurrentPage = 1;

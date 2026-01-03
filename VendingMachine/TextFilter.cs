@@ -6,8 +6,8 @@ namespace VendingMachine;
 
 public class TextFilter<T>
 {
-    private readonly Func<T, string> _selector;
-    public TextFilter(Func<T, string> selector)
+    private readonly Func<T, IEnumerable<string>> _selector;
+    public TextFilter(Func<T, IEnumerable<string>> selector)
     {
         _selector = selector ?? throw new ArgumentNullException(nameof(selector));
     }
@@ -15,6 +15,6 @@ public class TextFilter<T>
     {
         if (string.IsNullOrWhiteSpace(searchText))
             return source;
-        return source.Where(item => _selector(item).Contains(searchText, StringComparison.OrdinalIgnoreCase));
+        return source.Where(item => _selector(item).Any(value => value.Contains(searchText, StringComparison.OrdinalIgnoreCase)));
     }
 }

@@ -1641,11 +1641,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\user\\Desktop\\Arina\\IT\\C#\\Desktop\\CsDesk06_VendingMachineApp\\VendingMachine\\VendingMachine.csproj",
+      "projectUniqueName": "C:\\Users\\user\\Desktop\\Arina\\IT\\C#\\Desktop\\CsDesk06_VendingMachineApp\\VendingMachine\\VendingMachine.csproj",
       "projectName": "VendingMachine",
-      "projectPath": "c:\\Users\\user\\Desktop\\Arina\\IT\\C#\\Desktop\\CsDesk06_VendingMachineApp\\VendingMachine\\VendingMachine.csproj",
+      "projectPath": "C:\\Users\\user\\Desktop\\Arina\\IT\\C#\\Desktop\\CsDesk06_VendingMachineApp\\VendingMachine\\VendingMachine.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\user\\Desktop\\Arina\\IT\\C#\\Desktop\\CsDesk06_VendingMachineApp\\VendingMachine\\obj\\",
+      "outputPath": "C:\\Users\\user\\Desktop\\Arina\\IT\\C#\\Desktop\\CsDesk06_VendingMachineApp\\VendingMachine\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1736,13 +1736,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1900",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json."
-    }
-  ]
+  }
 }

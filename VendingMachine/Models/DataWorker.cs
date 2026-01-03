@@ -109,7 +109,8 @@ namespace VendingMachine.Models
         public List<Company> GetAllCompanies()
         {
             List<Company> companies = new List<Company>();
-            string sql = "SELECT COMPANY_CODE, COMPANY_NAME, ADDRESS, WEBSITE, RESPONSIBLE_PERSON_ID, STATUS FROM COMPANY;";
+            string sql = "SELECT C.COMPANY_CODE, C.COMPANY_NAME, C.ADDRESS, C.WEBSITE, C.RESPONSIBLE_PERSON_ID, U.USERNAME, U.SURNAME, U.MIDDLE_NAME, U.PHONE, U.EMAIL, C.STATUS "
+            +"FROM COMPANY C JOIN USER_TABLE U ON C.RESPONSIBLE_PERSON_ID = ID_USER;";
             using (var command = new FbCommand(sql, _connection))
             using (var reader = command.ExecuteReader())
             {
@@ -120,9 +121,14 @@ namespace VendingMachine.Models
                     string address = reader.GetString(2);
                     string website = reader.GetString(3);
                     int userId = reader.GetInt32(4);
-                    string status = reader.GetString(5);
+                    string uName = reader.GetString(5);
+                    string uSurname = reader.GetString(6);
+                    string uMiddlename = reader.GetString(7);
+                    string phone = reader.GetString(8);
+                    string email = reader.GetString(9);
+                    string status = reader.GetString(10);
 
-                    companies.Add(new Company(id, name, address, website, userId, status));
+                    companies.Add(new Company(id, name, address, website, userId, uName, uSurname, uMiddlename, phone, email, status));
                 }
             }
             return companies;
@@ -148,6 +154,16 @@ namespace VendingMachine.Models
             using var command = new FbCommand(sql, _connection);
             command.Parameters.AddWithValue("@password", password);
             command.Parameters.AddWithValue("@id", id);
+            int affected = command.ExecuteNonQuery();
+        }
+        public void UpdateCompanyInfo(int code, string name, string address, string website)
+        {
+            string sql = "UPDATE COMPANY SET COMPANY_NAME = @name, ADDRESS = @address, WEBSITE = @website WHERE COMPANY_CODE = @code;";
+            using var command = new FbCommand(sql, _connection);
+            command.Parameters.AddWithValue("@name", name);
+            command.Parameters.AddWithValue("@address", address);
+            command.Parameters.AddWithValue("@website", website);
+            command.Parameters.AddWithValue("@code", code);
             int affected = command.ExecuteNonQuery();
         }
         public void UpdateCompanyStatus(int code, string status)

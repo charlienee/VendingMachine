@@ -35,6 +35,9 @@
         <DataGridTextColumn Header="Название" Binding="{Binding CompanyName}"/>
         <DataGridTextColumn Header="Адрес" Binding="{Binding Address}"/>
         <DataGridTextColumn Header="Сайт" Binding="{Binding Website}"/>
+        <DataGridTextColumn Header="Имя" Binding="{Binding UserName}"/>
+        <DataGridTextColumn Header="Фамилия" Binding="{Binding UserSurname}"/>
+        <DataGridTextColumn Header="Отчество" Binding="{Binding UserMiddlename}"/>
         <DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
         <DataGridTemplateColumn Header="Действия">
           <DataGridTemplateColumn.CellTemplate>
@@ -43,7 +46,7 @@
                 <Button Click="DeleteCompanyBtn_Click">
                   <Image Source="avares://VendingMachine/Image/DeleteIcon.png" Width="15" Height="15"/>
                 </Button>
-                <Button Content="Редактировать">
+                <Button Content="Редактировать" Click="EditCompanyBtn_Click">
                   <Image Source="avares://VendingMachine/Image/EditIcon.png" Width="15" Height="15"/>
                 </Button>
               </StackPanel>

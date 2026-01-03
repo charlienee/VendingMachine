@@ -12,14 +12,24 @@ namespace VendingMachine.Models
         public string Address {get; set;}
         public string Website {get; set;}
         public int UserId {get;set;}
+        public string UserName {get;set;}
+        public string UserSurname {get;set;}
+        public string UserMiddlename {get;set;}
+        public string Phone {get;set;}
+        public string Email {get;set;}
         public string Status {get;set;}
-        public Company(int companyCode, string name, string address, string website, int userId, string status)
+        public Company(int companyCode, string name, string address, string website, int userId, string userName, string userSurname, string userMiddlename, string phone, string email, string status)
         {
             CompanyCode = companyCode;
             CompanyName = name;
             Address = address;
             Website = website;
             UserId = userId;
+            UserName = userName;
+            UserSurname = userSurname;
+            UserMiddlename = userMiddlename;
+            Phone = phone;
+            Email = email;
             Status = status;
         }
     }

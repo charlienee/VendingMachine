@@ -24,7 +24,7 @@ public partial class CompanyPage : UserControl
     private List<Company> _filteredCompanies;
     private User _currentUser;
     private readonly Paginator<Company> _paginator = new(5);
-    private readonly TextFilter<Company> _companyFilter = new(c => c.CompanyName);
+    private readonly TextFilter<Company> _companyFilter = new(c => new [] {c.CompanyName, c.UserName, c.UserSurname, c.UserMiddlename});
     private MainWindow _mainWindow;
     public CompanyPage()
     {
@@ -56,7 +56,7 @@ public partial class CompanyPage : UserControl
         _paginator.Reset();
         ApplyPagination();
     }
-    private void ApplySearch(string searchText)
+    private void ApplyCompanyNameSearch(string searchText)
     {
         
         _filteredCompanies = _companyFilter
@@ -73,6 +73,7 @@ public partial class CompanyPage : UserControl
     {
         Company_dg.ItemsSource = new ObservableCollection<Company>(_paginator.Apply(_filteredCompanies));
         currentPageTb.Text=_paginator.CurrentPage.ToString();
+        CountTB.Text = $"Записи с {Math.Min(_paginator.PageSize * (_paginator.CurrentPage - 1) + 1, _filteredCompanies.Count)} до {Math.Min(_paginator.CurrentPage * _paginator.PageSize, _filteredCompanies.Count)} из {_filteredCompanies.Count} записей";
     }
     private void InitializeActionColumn()
     {
@@ -136,7 +137,7 @@ public partial class CompanyPage : UserControl
         if (!IsInitialized || sender is not TextBox textBox)
             return;
 
-        ApplySearch(textBox.Text);
+        ApplyCompanyNameSearch(textBox.Text);
     }
     
     //Companies buttons click
@@ -149,6 +150,15 @@ public partial class CompanyPage : UserControl
         ResetSearchFilter();
         LoadAllCompanies();
         ApplyPagination();
+    }
+    public void EditCompanyBtn_Click(object? sender, RoutedEventArgs e)
+    {
+        if (sender is not Button {DataContext: Company company})
+            return;
+        var window = new EditCompanyWindow(_mainWindow, company);
+        window.CompanyEdited += ReloadCompanies;
+        window.ShowDialog(_mainWindow);
+        SearchTB.Text = string.Empty;
     }
     public void BlockBtn_Click(object? sender, RoutedEventArgs e)
     {
@@ -188,7 +198,7 @@ public partial class CompanyPage : UserControl
         var folderPath = await SelectFolder(_mainWindow);
         if (string.IsNullOrEmpty(folderPath))
             return;
-        ImportCSV(folderPath, string.Join(Environment.NewLine, _allCompanies.Select(c => $"{c.CompanyCode};{c.CompanyName};{c.Address};{c.Website};{c.Status}")));
+        ImportCSV(folderPath, string.Join(Environment.NewLine, _allCompanies.Select(c => $"{c.CompanyCode};{c.CompanyName};{c.Address};{c.Website};{c.UserName};{c.UserSurname};{c.UserMiddlename}{c.Status}")));
     }
     public async Task<string> SelectFolder(Window parentWindow)
     {
