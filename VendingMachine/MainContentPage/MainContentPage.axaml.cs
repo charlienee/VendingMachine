@@ -42,7 +42,7 @@ public partial class MainContentPage : UserControl
                 PageContent.Content = new HomePage();
                 break;
             case "VM":
-                PageContent.Content = new VmPage();
+                PageContent.Content = new VmPage(mainWindow);
                 break;
             case "Company":
                 PageContent.Content = _companyPage;

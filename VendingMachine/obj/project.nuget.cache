@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jm3Mx3s8wTE=",
+  "dgSpecHash": "LoXlyfPaZcM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\Desktop\\Arina\\IT\\C#\\Desktop\\CsDesk06_VendingMachineApp\\VendingMachine\\VendingMachine.csproj",
+  "projectFilePath": "c:\\Users\\user\\Desktop\\Arina\\IT\\C#\\Desktop\\CsDesk06_VendingMachineApp\\VendingMachine\\VendingMachine.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\avalonia\\11.2.1\\avalonia.11.2.1.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\avalonia.angle.windows.natives\\2.1.22045.20230930\\avalonia.angle.windows.natives.2.1.22045.20230930.nupkg.sha512",

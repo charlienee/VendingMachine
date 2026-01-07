@@ -4,10 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="VendingMachine.CompanyPage" x:CompileBindings="False">
-  <Grid RowDefinitions="Auto, Auto, Auto, *, Auto" Margin="20 10">
+  <Grid RowDefinitions="Auto, Auto, *, Auto" Margin="20 10">
     <TextBlock Text="Компании" Margin="0 5"/>
-    <Button Grid.Row="1" Content="Добавить компанию" x:Name="CreateCompany_btn" Click="CreateCompanyBtn_Click"/>
-    <DockPanel Grid.Row="2" LastChildFill="False" Margin="0 10">
+    <DockPanel Grid.Row="1" LastChildFill="False" Margin="0 10">
       <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
         <TextBlock Text="Показать " VerticalAlignment="Center"/>
         <ComboBox x:Name="PageSizeCb" Margin="2 0" SelectedIndex="0" SelectionChanged="PageSizeCB_SelectionChanged">
@@ -18,10 +17,11 @@
         <TextBlock Text=" записей" VerticalAlignment="Center"/>
       </StackPanel>
       <TextBox Watermark="Поиск" TextChanged="SearchTB_TextChanged" Margin="5 0" x:Name="SearchTB"/>
+      <Button DockPanel.Dock="Right" Content="Добавить компанию" x:Name="CreateCompany_btn" Click="CreateCompanyBtn_Click"/>
       <Button DockPanel.Dock="Right" Content="Экспорт в csv" Click="ReportCSVBtn_Click"/>
     </DockPanel>
     <!--ОБЯЗАТЕЛЬНО УСТАНОВИТЬ ПАКЕТ NUGET И ДОБАВИТЬ СТИЛЬ В APP.AXAML -->
-    <DataGrid x:Name="Company_dg" Grid.Row="3"
+    <DataGrid x:Name="Company_dg" Grid.Row="2"
       AutoGenerateColumns="False" 
 		  GridLinesVisibility="All" 
 		  RowBackground="LightGray"
@@ -67,7 +67,7 @@
         </Style>
       </DataGrid.Styles>
     </DataGrid>
-    <DockPanel LastChildFill="False" Grid.Row="4" Margin="0 10">
+    <DockPanel LastChildFill="False" Grid.Row="3" Margin="0 10">
       <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
         <Button Content="&lt;" Click="BackPageBtn_Click"/>
         <TextBlock Text="1" VerticalAlignment="Center" x:Name="currentPageTb" Margin="3 0"/>

@@ -21,8 +21,7 @@
             Margin="0 10 0 0">
             <lvc:PieChart.Series>
               <lvc:XamlAngularGaugeSeries CornerRadius="1" Fill="#4CAF50" x:Name="workingVM_Gauge" MaxRadialColumnWidth="40"/>
-              <lvc:XamlAngularGaugeSeries CornerRadius="1" Fill="#FFC107" x:Name="serviceVM_Gauge" MaxRadialColumnWidth="40"/>
-              <lvc:XamlAngularGaugeSeries CornerRadius="1" Fill="#F44336" x:Name="nWorkingVM_Gauge" MaxRadialColumnWidth="40"/>
+              <lvc:XamlAngularGaugeSeries CornerRadius="1" Fill="#797979ff" x:Name="othersVM_Gauge" MaxRadialColumnWidth="40"/>
             </lvc:PieChart.Series>
             <lvc:PieChart.VisualElements>
               <lvc:XamlNeedle Width="10" x:Name="eff_needle"/>
@@ -32,6 +31,21 @@
     </Grid>
     <Grid Grid.Row="1" Grid.Column="1" Background="#FFF" Margin="10 5" RowDefinitions="Auto, *">
       <TextBlock Background="#EEE" Text=" Состояние сети" Padding="5" VerticalAlignment="Center"/>
+      <lvc:PieChart HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                    InitialRotation="100"
+                    MaxAngle="340"
+                    MinValue="0"
+                    MaxValue="100"
+                    Margin="0 10 0 0" Grid.Row="1">
+        <lvc:PieChart.Series>
+          <lvc:XamlAngularGaugeSeries CornerRadius="1" Fill="#4CAF50" 
+            x:Name="workingVMNetwork_Gauge" MaxRadialColumnWidth="20"/>
+            <lvc:XamlAngularGaugeSeries CornerRadius="1" Fill="#d4f12d" 
+            x:Name="nworkingVMNetwork_Gauge" MaxRadialColumnWidth="20"/>
+            <lvc:XamlAngularGaugeSeries CornerRadius="1" Fill="#e43636" 
+            x:Name="serviceVMNetwork_Gauge" MaxRadialColumnWidth="20"/>
+        </lvc:PieChart.Series>
+      </lvc:PieChart>
     </Grid>
     <Grid Grid.Row="1" Grid.Column="2" Background="#FFF" Margin="10 5" RowDefinitions="Auto, *">
       <TextBlock Background="#EEE" Text=" Сводка" Padding="5" VerticalAlignment="Center"/>

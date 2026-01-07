@@ -33,6 +33,9 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [C:/Users/user/Desktop/Arina/IT/C\#/Desktop/CsDesk06_VendingMachineApp/VendingMachine/CreateCompanyWindow/CreateCompanyWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/Users/user/Desktop/Arina/IT/C\#/Desktop/CsDesk06_VendingMachineApp/VendingMachine/CreateVMWindow/CreateVMWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/Users/user/Desktop/Arina/IT/C\#/Desktop/CsDesk06_VendingMachineApp/VendingMachine/EditCompanyWindow/EditCompanyWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 

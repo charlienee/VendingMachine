@@ -26,6 +26,7 @@ public partial class HomePage : UserControl
         SetValueEff();
         SetValuesSaleTotalSum();
         SetValuesSaleCount();
+        SetValueNetwork();
 
         _timer = new DispatcherTimer
         {
@@ -36,48 +37,55 @@ public partial class HomePage : UserControl
             SetValuesSaleCount();
             SetValuesSaleTotalSum();
             SetValueEff();
+            SetValueNetwork();
         };
         _timer.Start();
     }
     private void SetValueEff()
     {
         int workingVM = 0;
-        int nWorkingVM = 0;
-        int VMInService = 0;
+        int othersVM;
         using (var dataWorker = new DataWorker())
         {
             List<VM> vMs = dataWorker.GetAllVM();
             foreach (var v in vMs)
             {
                 if (v.Status.Trim() == "Рабочий")
-                {
                     ++workingVM;
-                    
-                }
-                else if (Regex.Replace(v.Status, @"\s", "") == "Нерабочий")
-                {
-                    ++nWorkingVM;
-                    
-                }
-                else if (v.Status.Trim() == "На обслуживании")
-                {
-                    ++VMInService;
-                }
+
             }
             workingVM_Gauge.GaugeValue = (double)workingVM / (double)vMs.Count * 100;
-            nWorkingVM_Gauge.GaugeValue = (double)nWorkingVM / (double)vMs.Count * 100;
-            serviceVM_Gauge.GaugeValue = (double)VMInService / (double)vMs.Count * 100;
             eff_needle.Value = (double)workingVM / (double)vMs.Count * 100;
             eff_tb.Text = $"Работающих автоматов - {(int)((double)workingVM / (double)vMs.Count * 100)}%";
         }
     }
-        
+    private void SetValueNetwork()
+    {
+        int workingVM = 0;
+        int nworkingVM = 0;
+        int serviceVM = 0;
+        using (var dataWorker = new DataWorker())
+        {
+            List<VM> vMs = dataWorker.GetAllVM();
+            foreach (var v in vMs)
+            {
+                if (v.Status.Trim() == "Рабочий")
+                    ++workingVM;
+                else if (v.Status.Trim() == "Не рабочий")
+                    ++nworkingVM;
+                else if (v.Status.Trim() == "На обслуживании")
+                    ++serviceVM;
+            }
+            workingVMNetwork_Gauge.GaugeValue = (double)workingVM / (double)vMs.Count * 100;
+            nworkingVMNetwork_Gauge.GaugeValue = (double)nworkingVM / (double)vMs.Count * 100;
+            serviceVMNetwork_Gauge.GaugeValue = (double)serviceVM / (double)vMs.Count * 100;
+        }
+    }
     public void SetValuesSaleTotalSum()
     {
         using (var dataWorker = new DataWorker())
         {
             List<Sale> sales = dataWorker.GetAllSales();
-            
             
             DateTimePoint[] Values = Enumerable.Range(0, 10)
             .Select(i => DateTime.Today.AddDays(-9 + i))

@@ -65,10 +65,11 @@ namespace VendingMachine.Models
         public List<VM> GetAllVM()
         {
             List<VM> vMs = new List<VM>();
-            string sql = "SELECT VM.ID_VENDING_MACHINE, L.FULL_ADDRESS, L.PLACE_DESCRIPTION, M.MODEL, M.BRAND, S.STATUS FROM VENDING_MACHINE VM " 
+            string sql = "SELECT VM.ID_VENDING_MACHINE, L.FULL_ADDRESS, L.PLACE_DESCRIPTION, M.MODEL, M.BRAND, S.STATUS, VM.VENDING_MACHINE_NAME, C.COMPANY_CODE, C.COMPANY_NAME, VM.MODEM, VM.INSTALLATION_DATE FROM VENDING_MACHINE VM " 
             +"JOIN LOCATION L ON VM.LOCATION_ID = L.ID_LOCATION "
             +"JOIN VENDING_MACHINE_MODEL M ON VM.MODEL_ID = M.ID_MODEL "
-            +"JOIN VENDING_MACHINE_STATUS S ON VM.STATUS_ID = S.ID_STATUS;";
+            +"JOIN VENDING_MACHINE_STATUS S ON VM.STATUS_ID = S.ID_STATUS "
+            +"JOIN COMPANY C ON VM.COMPANY_ID = C.COMPANY_CODE;";
             using (var command = new FbCommand(sql, _connection))
             using (var reader = command.ExecuteReader())
             { 
@@ -80,8 +81,13 @@ namespace VendingMachine.Models
                     string model = reader.GetString(3);
                     string brand = reader.GetString(4);
                     string status = reader.GetString(5);
+                    string name = reader.GetString(6);
+                    int companyCode = reader.GetInt32(7);
+                    string companyName = reader.GetString(8);
+                    int modem = reader.GetInt32(9);
+                    DateOnly installationDate = DateOnly.FromDateTime(reader.GetDateTime(10));
 
-                    vMs.Add(new VM(id, address, placeDescription, model, brand, status));
+                    vMs.Add(new VM(id, address, placeDescription, model, brand, status, name, companyCode, companyName, modem, installationDate));
                 }
             }
             return vMs;
@@ -135,9 +141,16 @@ namespace VendingMachine.Models
         }
         public void DeleteCompany(int companyCode)
         {
-            string sql = @"DELETE FROM COMPANY WHERE COMPANY_CODE = @companyCode";
+            string sql = @"DELETE FROM COMPANY WHERE COMPANY_CODE = @companyCode;";
             using var command = new FbCommand(sql, _connection);
             command.Parameters.AddWithValue("@companyCode", companyCode);
+            int affected = command.ExecuteNonQuery();
+        }
+        public void DeleteVM(int id)
+        {
+            string sql = @"DELETE FROM VENDING_MACHINE WHERE ID_VENDING_MACHINE = @id;";
+            using var command = new FbCommand(sql, _connection);
+            command.Parameters.AddWithValue("@id", id);
             int affected = command.ExecuteNonQuery();
         }
         public void UpdateIsBlocked(int id, bool isBlocked)
@@ -172,6 +185,13 @@ namespace VendingMachine.Models
             using var command = new FbCommand(sql, _connection);
             command.Parameters.AddWithValue("@status", status);
             command.Parameters.AddWithValue("@code", code);
+            int affected = command.ExecuteNonQuery();
+        }
+        public void UpdateModem(int id)
+        {
+            string sql = @"UPDATE VENDING_MACHINE SET MODEM = -1 WHERE ID_VENDING_MACHINE = @id;";
+            using var command = new FbCommand(sql, _connection);
+            command.Parameters.AddWithValue("@id", id);
             int affected = command.ExecuteNonQuery();
         }
         public int GeneratedUniqueCompanyCode()
