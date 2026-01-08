@@ -22,7 +22,7 @@
         <TextBlock Text=" записей" VerticalAlignment="Center"/>
       </StackPanel>
       <TextBox Watermark="Фильтр" x:Name="SearchTB" DockPanel.Dock="Left" Margin="5 0" TextChanged="SearchTB_TextChanged"/>
-      <Button DockPanel.Dock="Right" Content="Добавить"/>
+      <Button DockPanel.Dock="Right" Content="Добавить" Click="CreateVMBtn_Click"/>
       <Button DockPanel.Dock="Right" Content="Экспорт" Click="ReportCSVBtn_Click"/>
     </DockPanel>
     <DataGrid Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" RowBackground="LightGray"

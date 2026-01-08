@@ -4,6 +4,89 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="VendingMachine.CreateVMWindow"
-        Title="CreateVMWindow">
-  Welcome to Avalonia!
+        Title="CreateVMWindow" x:CompileBindings="False">
+    <ScrollViewer  HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Margin="60 10">
+      <StackPanel>
+      <Grid ColumnDefinitions="*, *, *">
+        <StackPanel Margin="5">
+          <TextBlock Text="Название ТА" FontSize="12" Padding="3"/>
+          <TextBox x:Name="name_tb"/>
+          <TextBlock Text="Режим работы" FontSize="12" Padding="3"/>
+          <ComboBox x:Name="mode_tb">
+            <ComboBoxItem Content="Стандартный"/>
+            <ComboBoxItem Content="Тестовый"/>
+            <ComboBoxItem Content="Обслуживание"/>
+          </ComboBox>
+          <TextBlock Text="Адрес" FontSize="12" Padding="3"/>
+          <TextBox x:Name="address_tb"/>
+          <TextBlock Text="Номер автомата" FontSize="12" Padding="3"/>
+          <TextBox x:Name="number_tb"/>
+          <TextBlock Text="Товарная матрица" FontSize="12" Padding="3"/>
+          <ComboBox x:Name="productmatrix_cb" DisplayMemberBinding="{Binding Name}"/>
+          <TextBlock Text="Клиент" FontSize="12" Padding="3"/>
+          <ComboBox x:Name="client_cb" DisplayMemberBinding="{Binding Fullname}"/>
+          <TextBlock Text="Техник-оператор" FontSize="12" Padding="3"/>
+          <ComboBox x:Name="operator_cb" DisplayMemberBinding="{Binding Fullname}"/>
+          <TextBlock Text="RFID карты обслуживания" FontSize="12" Padding="3"/>
+          <TextBox x:Name="rfidServiceCard_tb"/>
+          <TextBlock Text="Id кассы Kit Online" FontSize="12" Padding="3"/>
+          <TextBox x:Name="IdKitOnline"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Margin="5">
+          <TextBlock Text="Производитель" FontSize="12" Padding="3"/>
+          <ComboBox x:Name="Brand_cb" DisplayMemberBinding="{Binding Brand}"/>
+          <TextBlock Text="Производитель (slave)" FontSize="12" Padding="3"/>
+          <TextBox Watermark="-" IsEnabled="False"/>
+          <TextBlock Text="Место" FontSize="12" Padding="3"/>
+          <TextBox x:Name="place_tb"/>
+          <TextBlock Text="Время работы" FontSize="12" Padding="3"/>
+          <TextBox x:Name="workHours_tb"/>
+          <TextBlock Text="Шаблон критических значений" FontSize="12" Padding="3"/>
+          <ComboBox x:Name="criticalthereshold_cb" DisplayMemberBinding="{Binding Name}"/>
+          <TextBlock Text="Менеджер" FontSize="12" Padding="3"/>
+          <ComboBox x:Name="manager_cb" DisplayMemberBinding="{Binding Fullname}"/>
+          <TextBlock Text="Платежные системы" FontSize="12" Padding="3"/>
+          <StackPanel Orientation="Horizontal">
+            <CheckBox Content="Монетопр." x:Name="coin_cb"/>
+            <CheckBox Content="Купюропр." x:Name="banknote_cb"/>
+          </StackPanel>
+          <TextBlock Text="RFID карты инкассации" FontSize="12" Padding="3"/>
+          <TextBox x:Name="RFIDincCard_tb"/>
+          <TextBlock Text="Приоритет обслуживания" FontSize="12" Padding="3"/>
+          <ComboBox x:Name="priority_cb">
+            <ComboBoxItem Content="Средний"/>
+            <ComboBoxItem Content="Низкий"/>
+            <ComboBoxItem Content="Высокий"/>
+          </ComboBox>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Margin="5">
+          <TextBlock Text="Модель" FontSize="12" Padding="3"/>
+          <ComboBox x:Name="model_cb" DisplayMemberBinding="{Binding Model_name}"/>
+          <TextBlock Text="Модель (slave)" FontSize="12" Padding="3"/>
+          <TextBox IsEnabled="False"/>
+          <TextBlock Text="Координаты" FontSize="12" Padding="3"/>
+          <TextBox x:Name="coordinates_tb"/>
+          <TextBlock Text="Часовой пояс" FontSize="12" Padding="3"/>
+          <ComboBox x:Name="timezone_tb"/>
+          <TextBlock Text="Шаблон уведомлений" FontSize="12" Padding="3"/>
+          <ComboBox x:Name="notificationTM_tb" DisplayMemberBinding="{Binding Name}"/>
+          <TextBlock Text="Инженер" FontSize="12" Padding="3"/>
+          <ComboBox x:Name="engineer_tb" DisplayMemberBinding="{Binding Fullname}"/>
+          <TextBlock Text=" " FontSize="12" Padding="3"/>
+          <StackPanel Orientation="Horizontal">
+            <CheckBox Content="Модуль б/н оплаты" x:Name="cashless_cb"/>
+            <CheckBox Content="Qr-платежи" x:Name="qr_cb"/>
+          </StackPanel>
+          <TextBlock Text="RFID карты загрузки" FontSize="12" Padding="3"/>
+          <TextBox x:Name="RFIDloadcard_tb"/>
+          <TextBlock Text="Модем" FontSize="12" Padding="3"/>
+          <TextBox IsEnabled="False" Text="-1"/>
+        </StackPanel>
+      </Grid>
+      <TextBlock Text="Примечания" FontSize="12" Padding="3"/>
+      <TextBox x:Name="comment_tb"/>
+      <Button Content="Создать" FontSize="12" Margin="5"/>
+      <TextBlock x:Name="info_tb" IsVisible="False"/>
+    </StackPanel>
+  </ScrollViewer>
 </Window>

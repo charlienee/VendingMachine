@@ -14,21 +14,21 @@
       <TextBlock Text="Адрес сайта компании" FontSize="12" Padding="3"/>
       <TextBox Watermark="Введите адрес сайта регистрируемой компании" x:Name="Website_tb"/>
       <TextBlock Text="Код регистрации" FontSize="12" Padding="3"/>
-      <TextBox IsReadOnly="True" x:Name="Code_tb"/>
+      <TextBox  IsEnabled="False" x:Name="Code_tb"/>
     </StackPanel>
     <StackPanel Grid.Column="1" Margin="5">
       <TextBlock Text="Имя ответственного лица" FontSize="12" Padding="3"/>
-      <TextBox x:Name="ResponsiblePersonName_tb" IsReadOnly="True"/>
+      <TextBox x:Name="ResponsiblePersonName_tb" IsEnabled="False"/>
       <TextBlock Text="Фамилия ответственного лица" FontSize="12" Padding="3"/>
-      <TextBox x:Name="ResponsiblePersonSurname_tb" IsReadOnly="True"/>
+      <TextBox x:Name="ResponsiblePersonSurname_tb" IsEnabled="False"/>
       <TextBlock Text="Отчество ответственного лица" FontSize="12" Padding="3"/>
-      <TextBox x:Name="ResponsiblePersonMiddlename_tb" IsReadOnly="True"/>
+      <TextBox x:Name="ResponsiblePersonMiddlename_tb" IsEnabled="False"/>
       <TextBlock Text="Телефон ответственного лица" FontSize="12" Padding="3"/>
-      <TextBox x:Name="ResponsiblePersonPhone_tb" IsReadOnly="True"/>
+      <TextBox x:Name="ResponsiblePersonPhone_tb" IsEnabled="False"/>
       <TextBlock Text="Email ответственного лица" FontSize="12" Padding="3"/>
-      <TextBox x:Name="ResponsiblePersonEmail_tb" IsReadOnly="True"/>
+      <TextBox x:Name="ResponsiblePersonEmail_tb" IsEnabled="False"/>
       <TextBlock Text="Статус" FontSize="12" Padding="3"/>
-      <TextBox IsReadOnly="True" Text="Заключен договор" x:Name="Status_tb"/>
+      <TextBox  IsEnabled="False" Text="Заключен договор" x:Name="Status_tb"/>
       <Button Content="Сохранить" FontSize="12" Margin="5" Click="SaveChange"/>
       <TextBlock x:Name="info_tb" IsVisible="False"/>
     </StackPanel>

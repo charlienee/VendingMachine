@@ -10,6 +10,7 @@ namespace VendingMachine.Models
         public string Surname {get;set;}
         public string Middlename {get;set;}
         public string Email {get;set;}
+        public string Fullname {get;set;}
         public string Phone {get;set;}
         public string Role {get;set;}
         public string Password {get;set;}
@@ -28,6 +29,8 @@ namespace VendingMachine.Models
             Password = password;
             Picture = picture;
             IsBlocked = isBlocked;
+
+            Fullname = name + " " + surname + " " + middlename;
         }
     }
 }

@@ -112,6 +112,79 @@ namespace VendingMachine.Models
             }
             return sales;
         }
+        public List<Model> GetAllModel()
+        {
+            List<Model> models = new List<Model>();
+            string sql = "SELECT ID_MODEL, BRAND, MODEL "
+            +"FROM VENDING_MACHINE_MODEL;";
+            using(var command = new FbCommand(sql, _connection))
+            using(var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32(0);
+                    string brand = reader.GetString(1);
+                    string model = reader.GetString(2);
+                
+                    models.Add(new Model(id, brand, model));
+                }
+            }
+            return models;
+        }
+        public List<Critical_Threshold_Rule> GetAllRule ()
+        {
+            List<Critical_Threshold_Rule> rules = new List<Critical_Threshold_Rule>();
+            string sql = "SELECT ID_CRITICAL_THRESHOLD_RULE, NAME "
+            +"FROM CRITICAL_THRESHOLD_RULE;";
+            using(var command = new FbCommand(sql, _connection))
+            using(var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32(0);
+                    string name = reader.GetString(1);
+                
+                    rules.Add(new Critical_Threshold_Rule(id, name));
+                }
+            }
+            return rules;
+        }
+        public List<Product_Matrix> GetAllProductMatrix ()
+        {
+            List<Product_Matrix> matrices = new List<Product_Matrix>();
+            string sql = "SELECT ID_PRODUCT_MATRIX, NAME "
+            +"FROM PRODUCT_MATRIX;";
+            using(var command = new FbCommand(sql, _connection))
+            using(var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32(0);
+                    string name = reader.GetString(1);
+                
+                    matrices.Add(new Product_Matrix(id, name));
+                }
+            }
+            return matrices;
+        }
+        public List<Notification_Template> GetAllNotificationTemplate ()
+        {
+            List<Notification_Template> templates = new List<Notification_Template>();
+            string sql = "SELECT ID_NOTIFICATION_TEMPLATE, NAME "
+            +"FROM NOTIFICATION_TEMPLATE;";
+            using(var command = new FbCommand(sql, _connection))
+            using(var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int id = reader.GetInt32(0);
+                    string name = reader.GetString(1);
+                
+                    templates.Add(new Notification_Template(id, name));
+                }
+            }
+            return templates;
+        }
         public List<Company> GetAllCompanies()
         {
             List<Company> companies = new List<Company>();

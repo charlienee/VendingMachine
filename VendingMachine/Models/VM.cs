@@ -37,4 +37,46 @@ namespace VendingMachine.Models
             FullModel = $"{Brand} {Model}";
         }
     }
+    public class Model
+    {
+        public int Id {get; set;}
+        public string Brand {get; set;}
+        public string Model_name {get; set;}
+        public Model(int id, string brand, string model)
+        {
+            Id = id; 
+            Brand = brand;
+            Model_name = model;
+        }
+    }
+    public class Critical_Threshold_Rule
+    {
+        public int Id {get; set;}
+        public string Name {get; set;}
+        public Critical_Threshold_Rule(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+    }
+    public class Product_Matrix
+    {
+        public int Id {get; set;}
+        public string Name {get; set;}
+        public Product_Matrix(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+    }
+    public class Notification_Template
+    {
+        public int Id {get; set;}
+        public string Name {get; set;}
+        public Notification_Template(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+    }
 }

@@ -14,7 +14,7 @@
       <TextBlock Text="Адрес сайта компании" FontSize="12" Padding="3"/>
       <TextBox Watermark="Введите адрес сайта регистрируемой компании" x:Name="Website_tb"/>
       <TextBlock Text="Код регистрации" FontSize="12" Padding="3"/>
-      <TextBox IsReadOnly="True" x:Name="Code_tb"/>
+      <TextBox IsEnabled="False" x:Name="Code_tb"/>
       <Button Content="Перегенирировать код регистрации" FontSize="12" Margin="5" Click="RegeneratedCodeBtn_Click"/>
     </StackPanel>
     <StackPanel Grid.Column="1" Margin="5">

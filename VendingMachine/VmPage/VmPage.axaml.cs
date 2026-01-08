@@ -213,4 +213,9 @@ public partial class VmPage : UserControl
         LoadAllCompanies();
         ApplyPagination();
     }
+    private void CreateVMBtn_Click(object? sender, RoutedEventArgs e)
+    {
+        var window = new CreateVMWindow();
+        window.ShowDialog(_mainWindow);
+    }
 }
